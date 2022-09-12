@@ -1,3 +1,5 @@
+
+
 html,
 body {
   padding: 0;
@@ -24,3 +26,7 @@ a {
     background: black;
   }
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

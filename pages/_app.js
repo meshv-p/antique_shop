@@ -1,7 +1,13 @@
-import '../styles/globals.css'
+import App from "../compo/App";
+import { Navbar } from "../compo/Navbar";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <App Component={Component} pageProps={pageProps} />
+    </>
+  );
 }
 
-export default MyApp
+export default MyApp;
