@@ -4,6 +4,9 @@ import Image from "next/image";
 // import styles from "";
 
 import { useState } from "react";
+import { useEffect } from 'react';
+import { useRouter } from 'next/router'
+import { useCartStore } from '../../store';
 
 
 
@@ -65,6 +68,25 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 const ProductItem = () => {
+
+    let url = useRouter()
+    let cart = useCartStore()
+
+    useEffect(() => {
+        console.log(url);
+
+    }, [])
+
+
+    function addToCart() {
+        console.log("add to cart", product);
+        // alert("Added to cart")
+        cart.add(product)
+        console.log(cart.cart)
+    }
+
+
+
     const [selectedColor, setSelectedColor] = useState(product.colors[0]);
     const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
@@ -176,7 +198,7 @@ const ProductItem = () => {
                                 </div>
                             </div>
 
-                            <form className="mt-10">
+                            <div className="mt-10">
                                 {/* Colors */}
                                 <div>
                                     <h3 className="text-sm text-gray-900 font-medium">Color</h3>
@@ -198,10 +220,11 @@ const ProductItem = () => {
                                 <button
                                     type="submit"
                                     className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    onClick={addToCart}
                                 >
                                     Add to bag
                                 </button>
-                            </form>
+                            </div>
                         </div>
 
                         <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">

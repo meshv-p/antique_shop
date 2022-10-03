@@ -1,8 +1,12 @@
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon, UserIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
+import Image from 'next/image'
+import CommandPalete from './CommandPalete'
+import { useAuth, useCartStore, useSearch } from '../store'
+import { UserAvatar } from './UserAvatar'
 
 const navigation = {
     categories: [
@@ -132,10 +136,33 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+
+    let auth = useAuth()
+    let cart = useCartStore()
+
     const [open, setOpen] = useState(false)
+    // const [isSearch, setIsSearch] = useState(false)
+    let openSearchBar = useSearch(state => state.open);
+
+    useEffect(() => {
+        if (typeof window === "undefined") {
+
+        } else {
+            window?.addEventListener('keydown', (e) => {
+                if (e.key === '/') {
+                    openSearchBar()
+
+                }
+            }
+            )
+        }
+    }, [])
+
+
 
     return (
-        <div className="bg-white dark:bg-slate-400">
+        // <div className="bg-white dark:bg-slate-400">
+        <div className="bg-white ">
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -276,7 +303,11 @@ export default function Navbar() {
                 </Dialog>
             </Transition.Root>
 
-            <header className="relative bg-white dark:bg-slate-400">
+
+
+            {/* Top banners */}
+            {/* <header className="relative bg-white dark:bg-slate-400"> */}
+            <header className="relative bg-white ">
                 <p className="bg-indigo-600 h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8">
                     Get free delivery on orders over $100
                 </p>
@@ -295,12 +326,13 @@ export default function Navbar() {
 
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0">
-                                <span className="sr-only">Workflow</span>
+                                <span className="sr-only">Logo</span>
                                 <Link href="/">
                                     <img style={{ cursor: 'pointer' }}
                                         className="h-8 w-auto"
                                         src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-                                        alt=""
+                                        alt="al"
+                                        layout='fill'
                                     />
                                 </Link>
                             </div>
@@ -348,10 +380,11 @@ export default function Navbar() {
                                                                             {category.featured.map((item) => (
                                                                                 <div key={item.name} className="group relative text-base sm:text-sm">
                                                                                     <div className="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
-                                                                                        <img
+                                                                                        <Image
                                                                                             src={item.imageSrc}
                                                                                             alt={item.imageAlt}
-                                                                                            className="object-center object-cover"
+                                                                                            className=" object-cover"
+                                                                                            layout='fill'
                                                                                         />
                                                                                     </div>
                                                                                     <a href={item.href} className="mt-6 block font-medium text-gray-900">
@@ -409,53 +442,57 @@ export default function Navbar() {
                             </Popover.Group>
 
                             <div className="ml-auto flex items-center">
+
+
+                                <CommandPalete />
+
+
+
                                 {/* Search */}
                                 <div className="flex lg:ml-6">
-                                    <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                                    <button className="p-2 text-gray-400 hover:text-gray-500">
                                         <span className="sr-only">Search</span>
-                                        <SearchIcon className="w-6 h-6" aria-hidden="true" />
-                                    </a>
+                                        <SearchIcon onClick={() => { console.log('Click'); openSearchBar() }} className="w-6 h-6" aria-hidden="true" />
+                                    </button>
                                 </div>
-
-                                {/* Cart */}
-                                <div className="ml-4 flow-root lg:ml-6">
-                                    <a href="#" className="group -m-2 p-2 flex items-center">
-                                        <span className="ml-2 mr-1 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-                                        <ShoppingBagIcon
-                                            className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                                            aria-hidden="true"
-                                        />
-                                        <span className="sr-only">items in cart, view bag</span>
-                                    </a>
-                                </div>
-
-
-                                {/* Currency */}
-                                {/* <div className="hidden lg:ml-8 lg:flex">
-                                    <a href="#" className="text-gray-700 hover:text-gray-800 flex items-center">
-                                        <img
-                                            src="https://tailwindui.com/img/flags/flag-canada.svg"
-                                            alt=""
-                                            className="w-5 h-auto block flex-shrink-0"
-                                        />
-                                        <span className="ml-3 block text-sm font-medium">CAD</span>
-                                        <span className="sr-only">, change currency</span>
-                                    </a>
-                                </div> */}
-
 
 
                                 {/* Login */}
-                                <div className="ml-2 hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                                        Sign in
-                                    </a>
-                                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                                        Create account
-                                    </a>
+                                <div className="ml-2  lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    {
+                                        auth.user ?
+                                            <UserAvatar name={auth.user.username} />
+
+                                            :
+                                            <>
+                                                <Link href="/login" className="">
+                                                    Sign in
+                                                </Link>
+                                                <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                                                <Link href="/signup" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                                    Create account
+                                                </Link>
+                                            </>
+                                    }
                                 </div>
 
+
+
+
+
+                                {/* Cart */}
+                                <div className="ml-4 flow-root lg:ml-6">
+                                    <Link href="/cart" >
+                                        <span className="group -m-2 flex items-center p-2" role='button'>
+                                            <ShoppingBagIcon
+                                                className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                aria-hidden="true"
+                                            />
+                                            <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart.totalItems}</span>
+                                            <span className="sr-only">items in cart, view bag</span>
+                                        </span>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
