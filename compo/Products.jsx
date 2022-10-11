@@ -17,27 +17,28 @@
 const products = [
     {
         id: 1,
-        name: 'Basic Tee',
+        name: 'Clock',
         href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg',
+        imageSrc: '/clock.jfif',
         imageAlt: "Front of men's Basic Tee in black.",
         price: '$35',
         color: 'Black',
     },
     {
         id: 1,
-        name: 'Basic Tee',
+        name: 'Ganesh Murti',
         href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-02.jpg',
+        imageSrc: '/ganesh_murti.jfif',
         imageAlt: "Front of men's Basic Tee in black.",
         price: '$35',
         color: 'Black',
     },
     {
         id: 1,
-        name: 'Basic Tee',
+        name: 'Animal Crossing: New Horizons',
         href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-03.jpg',
+        // imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-03.jpg',
+        imageSrc: '/animal.jfif',
         imageAlt: "Front of men's Basic Tee in black.",
         price: '$35',
         color: 'Black',
@@ -58,7 +59,7 @@ export default function Products() {
                                 <img
                                     src={product.imageSrc}
                                     alt={product.imageAlt}
-                                    className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                                    className="w-full h-full object-cover lg:w-full lg:h-full "
                                 />
                             </div>
                             <div className="mt-4 flex justify-between">

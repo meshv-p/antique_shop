@@ -103,10 +103,12 @@ export default function Cart() {
                                             </div>
 
                                             <div className="mt-4 sm:mt-0 sm:pr-9">
+                                                
+                                                {product.quantity}
                                                 <label htmlFor={`quantity-${product.quantity}`} className="sr-only">
-                                                    Quantity, {product.name}
+                                                    Quantity
                                                 </label>
-                                                <select
+                                                {/* <select
                                                     id={`quantity-${product.quantity ?? 1}`}
                                                     name={`quantity-${product.quantity ?? 1}`}
                                                     className="max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -119,7 +121,7 @@ export default function Cart() {
                                                     <option value={6}>6</option>
                                                     <option value={7}>7</option>
                                                     <option value={8}>8</option>
-                                                </select>
+                                                </select> */}
 
                                                 <div className="absolute top-0 right-0">
                                                     <button type="button"

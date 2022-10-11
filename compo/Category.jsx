@@ -18,23 +18,23 @@ import React from 'react'
 */
 const callouts = [
     {
-        name: 'Desk and Office',
+        name: 'Animal Crossing: New Horizons',
         description: 'Work from home accessories',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg',
+        imageSrc: '/animal.jfif',
         imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
         href: '#',
     },
     {
-        name: 'Self-Improvement',
+        name: 'Clock',
         description: 'Journals and note-taking',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg',
+        imageSrc: 'clock.jfif',
         imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
         href: '#',
     },
     {
-        name: 'Travel',
+        name: 'Ganesha',
         description: 'Daily commute essentials',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg',
+        imageSrc: 'ganesh_murti.jfif',
         imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
         href: '#',
     },

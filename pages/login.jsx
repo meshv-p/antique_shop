@@ -23,8 +23,8 @@ export default function Login() {
         e.preventDefault()
 
         let res = await login.fetchReq('', loginDetails)
-        let data = await res.json()
-        // console.log(res);
+        let data = await res?.json()
+        console.log(res);
         HttpErrorHandling({
             response: res,
             onSucess: async () => {

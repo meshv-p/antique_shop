@@ -3,14 +3,33 @@ import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { SearchIcon } from '@heroicons/react/solid'
 import { ExclamationCircleIcon } from '@heroicons/react/outline'
 import { useSearch } from '../store'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const items = [
     {
         id: 1,
-        name: 'Sliders',
-        description: 'A collection of sliders for selecting a range of values.',
-        url: '#',
-        imageUrl: 'https://tailwindui.com/img/component-images/icon-sliders.png',
+        name: 'Animal Crossing: New Horizons',
+        description: 'Work from home accessories',
+        imageSrc: '/animal.jfif',
+        imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
+        href: '/product/Animal Crossing: New Horizons',
+    },
+    {
+        id: 2,
+        name: 'Clock',
+        description: 'Journals and note-taking',
+        imageSrc: '/clock.jfif',
+        imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
+        href: '/product/Clock',
+    },
+    {
+        id: 3,
+        name: 'Ganesha',
+        description: 'Daily commute essentials',
+        imageSrc: '/ganesh_murti.jfif',
+        imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
+        href: '/product/Ganesha',
     },
     // More items...
 ]
@@ -21,6 +40,7 @@ function classNames(...classes) {
 
 export default function CommandPalete() {
 
+    let Router = useRouter()
 
     // let { isSearch } = props;
     let isSearch = useSearch(state => state.isSearch);
@@ -49,7 +69,7 @@ export default function CommandPalete() {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
+                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-50 blur-sm backdrop-blur-0 transition-opacity" />
                 </Transition.Child>
 
                 <Transition.Child
@@ -64,7 +84,14 @@ export default function CommandPalete() {
                     <Combobox
                         as="div"
                         className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
-                        onChange={(item) => (window.location = item.url)}
+                        onChange={(item) => {
+                            Router.push(item.href)
+                            closeSearch()
+                        }
+
+                            // (window.location = item.href)
+
+                        }
                     >
                         <div className="relative focus-visible:outline-none">
                             <SearchIcon
@@ -96,7 +123,7 @@ export default function CommandPalete() {
                                                         active ? 'bg-gray-700' : 'bg-gray-500'
                                                     )}
                                                 >
-                                                    <img src={item.imageUrl} alt="" className="h-8 w-8" />
+                                                    <Image src={item.imageSrc} height='32px' width='32px' alt="" className="h-8 w-8 object-cover" />
                                                 </div>
                                                 <div className="ml-4 flex-auto">
                                                     <p className={classNames('text-sm font-medium', active ? 'text-gray-900' : 'text-gray-700')}>

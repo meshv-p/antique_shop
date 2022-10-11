@@ -2,20 +2,13 @@ import React from 'react'
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import {
-  ArchiveIcon,
-  ArrowCircleRightIcon,
-  ChevronDownIcon,
-  DuplicateIcon,
-  HeartIcon,
-  PencilAltIcon,
-  TrashIcon,
-  UserAddIcon,
-  UserRemoveIcon,
+  CogIcon,
   UserIcon
 } from '@heroicons/react/solid'
 import { LogoutIcon } from '@heroicons/react/outline';
 import { useAuth } from '../store';
 import Router from 'next/router';
+import Link from 'next/link';
 
 
 
@@ -142,6 +135,27 @@ export const UserAvatar = ({ name = "Meshv" }) => {
               </Menu.Item>
 
             </div>
+            <div className="py-1">
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    href="/accounts"
+
+                  >
+                    <div className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'group flex items-center px-4 py-2 text-sm group-hover:text-gray-500'
+                    )}>
+                      <CogIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+
+                      Settings
+                    </div>
+                  </Link>
+                )}
+              </Menu.Item>
+
+            </div>
+
             <div className="py-1">
               <form method="POST" action="#">
                 <Menu.Item>

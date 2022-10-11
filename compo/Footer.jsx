@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 export const Footer = () => {
@@ -10,18 +11,18 @@ export const Footer = () => {
                         <li className="w-1/2 md:w-1/3 lg:w-1/3">
                             <div className="text-center">
                                 <h2 className="text-gray-500 dark:text-gray-200 text-md uppercase mb-4">
-                                    Components
+                                    Category
                                 </h2>
                                 <ul>
                                     <li className="mb-4 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
-                                        <a href="#">
-                                            Elements
-                                        </a>
+                                        <Link href="/product/Clock">
+                                            Clock
+                                        </Link>
                                     </li>
                                     <li className="mb-4 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
-                                        <a href="#">
+                                        <Link href="/product/">
                                             Forms
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="mb-4 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
                                         <a href="#">

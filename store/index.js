@@ -1,4 +1,5 @@
 import create from "zustand";
+// import { HttpErrorHandling } from "../services/httpErrorHandling";
 
 const BASE_URL = "https://strapi-meshv.herokuapp.com/api";
 
@@ -17,8 +18,9 @@ export const useSearch = create((set) => ({
 export const useAuth = create((set) => ({
   user: null,
   fetchReq: async (type = "", details) => {
+    let res;
     try {
-      let res = await fetch(`${BASE_URL}/auth/local/${type}`, {
+      res = await fetch(`${BASE_URL}/auth/local/${type}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +30,7 @@ export const useAuth = create((set) => ({
       console.log(res);
       return await res;
     } catch (error) {
+      console.log(error);
       return error;
     }
   },
@@ -43,10 +46,10 @@ export const useAuth = create((set) => ({
     set((state) => ({ user: null }));
   },
   isLoggedinUser: () => {
-    const user = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
+    const user = localStorage?.getItem("user");
+    const token = localStorage?.getItem("token");
     if (user && token) {
-      set((state) => ({ user: JSON.parse(user) }));
+      set((state) => ({ user: JSON?.parse(user) }));
     }
   },
 }));

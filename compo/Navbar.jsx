@@ -12,18 +12,18 @@ const navigation = {
     categories: [
         {
             id: 'women',
-            name: 'Women',
+            name: 'Clock',
             featured: [
                 {
                     name: 'New Arrivals',
                     href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+                    imageSrc: '/clock.jfif',
                     imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
                 },
                 {
-                    name: 'Basic Tees',
-                    href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+                    name: 'Brown Clock',
+                    href: '/product/Clock',
+                    imageSrc: '/brown_tree_clock.jfif',
                     imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
                 },
             ],
@@ -70,17 +70,17 @@ const navigation = {
         },
         {
             id: 'men',
-            name: 'Men',
+            name: 'God',
             featured: [
                 {
-                    name: 'New Arrivals',
+                    name: 'New Arrivals: Spring 2021',
                     href: '#',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
+                    imageSrc: '/ganesh_murti.jfif',
                     imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
                 },
                 {
                     name: 'Artwork Tees',
-                    href: '#',
+                    href: '',
                     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
                     imageAlt:
                         'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',

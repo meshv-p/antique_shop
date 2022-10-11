@@ -1,0 +1,6 @@
+- clock
+- Ganesh murti
+- God
+- animals
+- wall
+- floor
