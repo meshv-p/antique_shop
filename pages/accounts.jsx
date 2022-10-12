@@ -11,6 +11,7 @@ import {
     ViewGridAddIcon,
     XIcon,
 } from "@heroicons/react/outline";
+import { useAuth } from "../store";
 
 const user = {
     name: "Debbie Lewis",
@@ -48,6 +49,8 @@ export default function Account() {
     const [privateAccount, setPrivateAccount] = useState(false);
     const [allowCommenting, setAllowCommenting] = useState(true);
     const [allowMentions, setAllowMentions] = useState(true);
+
+    let auth = useAuth();
 
     return (
         <div>
@@ -180,7 +183,7 @@ export default function Account() {
                                                         id="username"
                                                         autoComplete="username"
                                                         className="focus:ring-sky-500 focus:border-sky-500 flex-grow block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
-                                                        defaultValue={'User' || user.handle}
+                                                        defaultValue={auth?.user?.username || user.handle}
                                                     />
                                                 </div>
                                             </div>
@@ -282,6 +285,7 @@ export default function Account() {
                                                 type="text"
                                                 name="first-name"
                                                 id="first-name"
+                                                defaultValue='Meshv'
                                                 autoComplete="given-name"
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             />
@@ -298,6 +302,7 @@ export default function Account() {
                                                 type="text"
                                                 name="last-name"
                                                 id="last-name"
+                                                defaultValue='Patel'
                                                 autoComplete="family-name"
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             />
@@ -308,12 +313,13 @@ export default function Account() {
                                                 htmlFor="url"
                                                 className="block text-sm font-medium text-gray-700"
                                             >
-                                                URL
+                                                Email
                                             </label>
                                             <input
                                                 type="text"
                                                 name="url"
                                                 id="url"
+                                                defaultValue={auth?.user?.email}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             />
                                         </div>
@@ -323,12 +329,13 @@ export default function Account() {
                                                 htmlFor="company"
                                                 className="block text-sm font-medium text-gray-700"
                                             >
-                                                Company
+                                                Email Confirmation
                                             </label>
                                             <input
-                                                type="text"
+                                                type="checkbox"
                                                 name="company"
                                                 id="company"
+                                                defaultChecked={auth?.user?.confirmed}
                                                 autoComplete="organization"
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             />
