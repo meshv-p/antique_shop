@@ -7,11 +7,10 @@ module.exports = {
         "[auto,auto,1fr]": "auto auto 1fr",
       },
     },
-    plugins: [
-      require("@tailwindcss/aspect-ratio"),
-      require("@tailwindcss/forms"),
-      
-    ],
   },
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
   // darkMode: "class",
 };

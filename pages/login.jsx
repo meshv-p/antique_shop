@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { HttpErrorHandling } from "../services/httpErrorHandling";
 import { useAlert, useAuth } from "../store";
@@ -11,7 +11,7 @@ export default function Login() {
 
     let alert = useAlert()
     let login = useAuth()
-
+    let router = useRouter()
 
     const [loginDetails, setLoginDetails] = useState({
         identifier: "",
@@ -32,7 +32,14 @@ export default function Login() {
                 // console.log(response)
                 login.login(response)
                 alert.open('Logged in successfully', 'Logged in successful.', 'success')
-                Router.push('/')
+
+                // check if the user is redirected from a page
+                if (router.query.callback) {
+                    router.push(router.query.callback)
+                } else {
+
+                    Router.push('/')
+                }
             },
             onError: () => alert.open(data?.error.message, 'error')
 
@@ -40,7 +47,7 @@ export default function Login() {
     }
 
     useEffect(() => {
-        console.log(login.user, 'lo');
+        console.log(login.user, 'lo', router);
         if (login.user) {
             Router.push('/')
         }

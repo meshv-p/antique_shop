@@ -141,22 +141,38 @@ export default function Navbar() {
     let cart = useCartStore()
 
     const [open, setOpen] = useState(false)
+    const [categories, setCategories] = useState([])
+
     // const [isSearch, setIsSearch] = useState(false)
     let openSearchBar = useSearch(state => state.open);
+
+
+    async function getCatories() {
+        // Fetch data from external API
+        const res = await fetch(`http://localhost:1337/api/categories`);
+        const getCategories = await res.json();
+        console.log(getCategories, 'in fun');
+        setCategories(getCategories.data);
+
+    }
+
 
     useEffect(() => {
         if (typeof window === "undefined") {
 
         } else {
+
+
             window?.addEventListener('keydown', (e) => {
                 if (e.key === '/') {
                     openSearchBar()
 
                 }
-            }
-            )
+            })
+            getCatories()
+
         }
-    }, [])
+    }, [cart.totalItems])
 
 
 
@@ -309,7 +325,7 @@ export default function Navbar() {
             {/* <header className="relative bg-white dark:bg-slate-400"> */}
             <header className="relative bg-white ">
                 <p className="bg-indigo-600 h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8">
-                    Get free delivery on orders over $100
+                    Get discount on orders over &#8377; 100
                 </p>
 
                 <nav aria-label="Top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -340,7 +356,7 @@ export default function Navbar() {
                             {/* Flyout menus */}
                             <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                                 <div className="h-full flex space-x-8">
-                                    {navigation.categories.map((category) => (
+                                    {categories && categories.map((category) => (
                                         <Popover key={category.name} className="flex">
                                             {({ open }) => (
                                                 <>
@@ -354,8 +370,8 @@ export default function Navbar() {
                                                                 'relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px'
                                                             )}
                                                         >
-                                                            <Link href={`/product/${category.name}`}>
-                                                                {category.name}
+                                                            <Link href={`/product/${category.attributes.name}`}>
+                                                                {category.attributes.name}
                                                             </Link>
                                                         </Popover.Button>
                                                     </div>
@@ -373,11 +389,11 @@ export default function Navbar() {
                                                             {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                                             <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
 
-                                                            <div className="relative bg-white z-10">
+                                                            {/* <div className="relative bg-white z-10">
                                                                 <div className="max-w-7xl mx-auto px-8">
                                                                     <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
                                                                         <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                                                            {category.featured.map((item) => (
+                                                                            {category?.map((item) => (
                                                                                 <div key={item.name} className="group relative text-base sm:text-sm">
                                                                                     <div className="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
                                                                                         <Image
@@ -421,7 +437,7 @@ export default function Navbar() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div> */}
                                                         </Popover.Panel>
                                                     </Transition>
                                                 </>
@@ -500,4 +516,8 @@ export default function Navbar() {
             </header>
         </div>
     )
+}
+
+export async function getServerSideProps() {
+
 }

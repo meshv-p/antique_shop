@@ -1,10 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { DotsVerticalIcon } from "@heroicons/react/outline";
 import { CheckCircleIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 
-const orders = [
+const ordersA = [
     {
         number: "WU88191111",
         href: "#",
@@ -38,6 +39,8 @@ function classNames(...classes) {
 }
 
 export default function OrderHistory() {
+    const [orders, setOrders] = useState(null)
+
     return (
         <div className="bg-white">
             <div className="py-16 sm:py-24">
@@ -57,7 +60,7 @@ export default function OrderHistory() {
                     <h2 className="sr-only">Recent orders</h2>
                     <div className="max-w-7xl mx-auto sm:px-2 lg:px-8">
                         <div className="max-w-2xl mx-auto space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">
-                            {orders.map((order) => (
+                            {orders ? orders.map((order) => (
                                 <div
                                     key={order.number}
                                     className="bg-white border-t border-b border-gray-200 shadow-sm sm:rounded-lg sm:border"
@@ -240,11 +243,48 @@ export default function OrderHistory() {
                                         ))}
                                     </ul>
                                 </div>
-                            ))}
+                            ))
+                                :
+
+                                // Empty state
+                                <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+                                    <div className="flex flex-col">
+                                        <div className="flex-shrink-0 mx-auto">
+                                            <svg
+
+                                                className="h-12 w-12 text-gray-400"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </div>
+                                        <div className="mt-2 text-center text-sm text-gray-500">
+                                            <p>
+                                                You have no orders placed.
+                                            </p>
+                                        </div>
+                                        <Link
+                                            href='/'
+                                        >
+                                            <div
+                                                role='button'
+                                                className=" mt-6 text-center w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+
+                                            >
+                                                Shop now
+                                            </div>
+                                        </Link>
+                                    </div>
+                                </div>
+
+
+
+                            }
+
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

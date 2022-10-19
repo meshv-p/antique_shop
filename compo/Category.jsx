@@ -1,21 +1,7 @@
+import Image from 'next/image';
 import Link from 'next/link'
-import React from 'react'
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
+import React, { useEffect, useState } from 'react'
+
 const callouts = [
     {
         name: 'Animal Crossing: New Horizons',
@@ -41,6 +27,25 @@ const callouts = [
 ]
 
 export default function Category() {
+
+    const [items, setItems] = useState([]);
+
+    function getItems() {
+        fetch('http://localhost:1337/api/items?populate=*')
+            .then(response => response.json())
+            .then(data => setItems(data.data));
+    }
+
+
+    useEffect(() => {
+
+        getItems();
+        console.log(items)
+    }, [])
+
+
+
+
     return (
         <div className="bg-gray-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,15 +53,17 @@ export default function Category() {
                     <h2 className="text-2xl font-bold text-gray-900">Collections</h2>
 
                     <div className="mt-6 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-6">
-                        {callouts.map((callout) => (
-                            <Link href={`/product/${callout.name}`} key={callout.name}>
-                                <div key={callout.name} className="group relative" style={{ cursor: 'pointer' }}>
+                        {items && items.map((i) => (
+                            <Link href={`/product/${i.attributes.Slug}`} key={i.attributes.name}>
+                                <div key={i.attributes.name} className="group relative" style={{ cursor: 'pointer' }}>
 
                                     <div className="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
-                                        <img
-                                            src={callout.imageSrc}
-                                            alt={callout.imageAlt}
+                                        <Image
+                                            loading='lazy'
+                                            src={`http://localhost:1337${i.attributes.Imgs.data[0].attributes.formats.large.url}`}
+                                            alt={i.attributes.name}
                                             className="w-full h-full object-center object-cover"
+                                            layout="fill"
                                         />
                                     </div>
                                     <h3 className="mt-6 text-sm text-gray-500">
@@ -64,11 +71,12 @@ export default function Category() {
                                         {/* <a href="/"> */}
 
                                         <span className="absolute inset-0" />
-                                        {callout.name}
+                                        {i.attributes.category.data.attributes.name}
+
                                         {/* </a> */}
                                         {/* </React.Fragment> */}
                                     </h3>
-                                    <p className="text-base font-semibold text-gray-900">{callout.description}</p>
+                                    <p className="text-base font-semibold text-gray-900">{i.attributes.name}</p>
 
                                 </div>
                             </Link>
