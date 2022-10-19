@@ -144,7 +144,7 @@ const ProductItem = ({ item }) => {
                         <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
                             <Image
                                 loading='lazy'
-                                src={`http://localhost:1337${product.attributes.Imgs.data[0].attributes.formats.large.url}`}
+                                src={`https://strapi-meshv.herokuapp.com${product.attributes.Imgs.data[0].attributes.formats.large.url}`}
                                 alt={product.attributes.name}
                                 className="w-full h-full object-center object-cover"
                                 width={product.attributes.Imgs.data[0].attributes.formats.large.width}
@@ -287,7 +287,7 @@ export default ProductItem
 export async function getServerSideProps(context) {
     const { id } = context.params
 
-    const res = await fetch(`http://localhost:1337/api/items?filters[Slug]=${id}&populate=*`)
+    const res = await fetch(`https://strapi-meshv.herokuapp.com/api/items?filters[Slug]=${id}&populate=*`)
     const item = await res.json()
 
 

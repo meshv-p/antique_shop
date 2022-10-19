@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["tailwindui.com", "localhost"],
+    domains: ["tailwindui.com", "localhost", "strapi-meshv.herokuapp.com"],
   },
 };
 

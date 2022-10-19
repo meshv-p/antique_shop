@@ -79,7 +79,7 @@ export default function Cart() {
                                 <li key={product.idOfItem} className="flex py-6 sm:py-10">
                                     <div className="flex-shrink-0">
                                         <img
-                                            src={`http://localhost:1337${product.item?.pic.data[0].attributes.formats.large.url}`}
+                                            src={`https://strapi-meshv.herokuapp.com${product.item?.pic.data[0].attributes.formats.large.url}`}
 
                                             // src={product.item?.pic.data[0].attributes.formats.large.url}
                                             alt={product.item.name}

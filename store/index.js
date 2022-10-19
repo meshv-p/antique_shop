@@ -225,7 +225,7 @@ export const useCartStore = create((set) => ({
 //make a custom hook for fetching data
 export const useFetch = create((set) => ({
   //url: "http://localhost:1337",
-  B_URL: LOCAL_URL,
+  B_URL: BASE_URL,
 
   //fetching data
   data: null,
@@ -243,7 +243,7 @@ export const useFetch = create((set) => ({
     try {
       // url = "http://localhost:1337" + url;
 
-      const response = await fetch(`http://localhost:1337/api${endPoint}`, {
+      const response = await fetch(`${BASE_URL}${endPoint}`, {
         method: method,
         headers: {
           "Content-Type": "application/json",

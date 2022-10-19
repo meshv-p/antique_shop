@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     // console.log(auth.isLoggedinUser(), "auth.isLoggedinUser()");
-    console.log(auth.user, "auth.isLoggedinUser()");
+    // console.log(auth.user, "auth.isLoggedinUser()");
   }, [auth]);
 
   return (

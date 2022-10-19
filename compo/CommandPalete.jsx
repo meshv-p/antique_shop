@@ -2,9 +2,10 @@ import { Fragment, useEffect, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { SearchIcon } from '@heroicons/react/solid'
 import { ExclamationCircleIcon } from '@heroicons/react/outline'
-import { useSearch } from '../store'
+import { useFetch, useSearch } from '../store'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+var md = require('markdown-it')();
 
 const items = [
     {
@@ -40,22 +41,40 @@ function classNames(...classes) {
 
 export default function CommandPalete() {
 
-    let Router = useRouter()
+    let router = useRouter()
 
     // let { isSearch } = props;
     let isSearch = useSearch(state => state.isSearch);
     let closeSearch = useSearch(state => state.close);
+    let urlFetch = useFetch()
 
 
     const [query, setQuery] = useState('')
+    const [items, setItems] = useState([])
+
+    async function handleSearch() {
+        let data = await urlFetch.urlFetch(`/items?_q=${query}&populate=*`, 'GET')
+        console.log(data);
+        setItems(data.data)
+        // closeSearch()
+    }
+
+    useEffect(() => {
+        if (query.length > 0) {
+            handleSearch()
+        }
 
 
-    const filteredItems =
-        query === ''
-            ? []
-            : items.filter((item) => {
-                return item.name.toLowerCase().includes(query.toLowerCase())
-            })
+    }, [query])
+
+
+
+    // const filteredItems =
+    //     query === ''
+    //         ? []
+    //         : items.filter((item) => {
+    //             return item.name.toLowerCase().includes(query.toLowerCase())
+    //         })
 
     return (
         <Transition.Root show={isSearch} as={Fragment} afterLeave={() => setQuery('')}>
@@ -73,7 +92,7 @@ export default function CommandPalete() {
                 </Transition.Child>
 
                 <Transition.Child
-                    as={Fragment}
+                    // as={Fragment}
                     enter="ease-out duration-300"
                     enterFrom="opacity-0 scale-95"
                     enterTo="opacity-100 scale-100"
@@ -84,14 +103,18 @@ export default function CommandPalete() {
                     <Combobox
                         as="div"
                         className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all"
-                        onChange={(item) => {
-                            Router.push(item.href)
-                            closeSearch()
+                        onChange={(e) => {
+                            console.log(e);
+                            // return alert('hi')
+                            // router.push(item.attributes.Slug)
+                            // closeSearch()
                         }
 
                             // (window.location = item.href)
 
                         }
+                        value={items}
+
                     >
                         <div className="relative focus-visible:outline-none">
                             <SearchIcon
@@ -105,12 +128,12 @@ export default function CommandPalete() {
                             />
                         </div>
 
-                        {filteredItems.length > 0 && (
+                        {items.length > 0 && (
                             <Combobox.Options static className="max-h-96 scroll-py-3 overflow-y-auto p-3">
-                                {filteredItems.map((item) => (
+                                {items.map((item) => (
                                     <Combobox.Option
-                                        key={item.id}
-                                        value={item}
+                                        key={item.idOfItem}
+                                        value={item.idOfItem}
                                         className={({ active }) =>
                                             classNames('flex cursor-default select-none rounded-xl p-3', active && 'bg-gray-100')
                                         }
@@ -123,15 +146,21 @@ export default function CommandPalete() {
                                                         active ? 'bg-gray-700' : 'bg-gray-500'
                                                     )}
                                                 >
-                                                    <Image src={item.imageSrc} height='32px' width='32px' alt="" className="h-8 w-8 object-cover" />
+                                                    <Image
+                                                        src={`http://localhost:1337${item.attributes?.Imgs.data[0].attributes.formats.thumbnail.url}`}
+
+                                                        height='32px' width='32px' alt="" className="h-8 w-8 object-cover" />
                                                 </div>
                                                 <div className="ml-4 flex-auto">
                                                     <p className={classNames('text-sm font-medium', active ? 'text-gray-900' : 'text-gray-700')}>
-                                                        {item.name}
+                                                        {item.attributes.name}
                                                     </p>
-                                                    <p className={classNames('text-sm', active ? 'text-gray-700' : 'text-gray-500')}>
-                                                        {item.description}
-                                                    </p>
+                                                    <p className={classNames('text-sm', active ? 'text-gray-700' : 'text-gray-500')}
+                                                        dangerouslySetInnerHTML={{ __html: `${md.render((item.attributes.desc).slice(0, 20))}...` }}
+
+                                                    />
+                                                    {/* {item.attributes.desc}
+                                                    </p> */}
                                                 </div>
                                             </>
                                         )}
@@ -140,7 +169,7 @@ export default function CommandPalete() {
                             </Combobox.Options>
                         )}
 
-                        {query !== '' && filteredItems.length === 0 && (
+                        {query !== '' && items.length === 0 && (
                             <div className="py-14 px-6 text-center text-sm sm:px-14">
                                 <ExclamationCircleIcon
                                     type="outline"
@@ -154,6 +183,10 @@ export default function CommandPalete() {
                     </Combobox>
                 </Transition.Child>
             </Dialog>
-        </Transition.Root>
+        </Transition.Root >
     )
 }
+
+
+// {{Local_URL}}/products?_q=New
+

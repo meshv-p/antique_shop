@@ -42,6 +42,7 @@ export default function Login() {
                 // console.log(response)
                 login.login(res)
                 alert.open('Logged in successfully', 'Logged in successful.', 'success')
+                console.log('opeinf alert')
 
                 // check if the user is redirected from a page
                 if (router.query.callback) {
@@ -51,14 +52,14 @@ export default function Login() {
                     Router.push('/')
                 }
             },
-            onError: () => alert.open(data?.error.message, 'error')
+            onError: () => alert.open(data?.error?.message, 'error')
 
         })
     }
 
     useEffect(() => {
-        console.log(login.user, 'lo', router);
-        console.log(process.env.NODE_ENV);
+        // console.log(login.user, 'lo', router);
+        // console.log(process.env.NODE_ENV);
         if (login.user) {
             Router.push('/')
         }

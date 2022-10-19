@@ -151,7 +151,7 @@ export default function Navbar() {
         // Fetch data from external API
         const res = await fetch(`http://localhost:1337/api/categories`);
         const getCategories = await res.json();
-        console.log(getCategories, 'in fun');
+        // console.log(getCategories, 'in fun');
         setCategories(getCategories.data);
 
     }

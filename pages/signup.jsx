@@ -36,7 +36,7 @@ export default function Signup() {
                 alert.open('Sign up successfully', 'Signed up successfuly.Now you can login.', 'success')
                 Router.push('/login')
             },
-            onError: () => alert.open(data?.error.message, 'error')
+            onError: () => alert.open(data?.error?.message, 'error')
 
         })
     }

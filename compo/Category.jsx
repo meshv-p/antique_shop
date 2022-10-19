@@ -31,7 +31,7 @@ export default function Category() {
     const [items, setItems] = useState([]);
 
     function getItems() {
-        fetch('http://localhost:1337/api/items?populate=*')
+        fetch('https://strapi-meshv.herokuapp.com/api/items?populate=*')
             .then(response => response.json())
             .then(data => setItems(data.data));
     }
@@ -40,7 +40,7 @@ export default function Category() {
     useEffect(() => {
 
         getItems();
-        console.log(items)
+        // console.log(items)
     }, [])
 
 
@@ -60,7 +60,7 @@ export default function Category() {
                                     <div className="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                                         <Image
                                             loading='lazy'
-                                            src={`http://localhost:1337${i.attributes.Imgs.data[0].attributes.formats.large.url}`}
+                                            src={`https://strapi-meshv.herokuapp.com${i.attributes.Imgs.data[0].attributes.formats.large.url}`}
                                             alt={i.attributes.name}
                                             className="w-full h-full object-center object-cover"
                                             layout="fill"

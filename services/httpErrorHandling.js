@@ -13,6 +13,7 @@ export const statusDetails = (type) => {
 };
 
 export const HttpErrorHandling = ({ response, onSucess, onError }) => {
+  console.log(response, "inhtp");
   switch (response?.status) {
     case 200:
       onSucess();
@@ -33,5 +34,5 @@ export const HttpErrorHandling = ({ response, onSucess, onError }) => {
 
       break;
   }
-  onError();
+  // onError();
 };

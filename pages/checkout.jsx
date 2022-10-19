@@ -350,7 +350,7 @@ export default function Example() {
                                     <li key={product.item.id} className="flex py-6 px-4 sm:px-6">
                                         <div className="flex-shrink-0">
                                             <img
-                                                src={`http://localhost:1337${product.item?.pic.data[0].attributes.formats.large.url}`}
+                                                src={`https://strapi-meshv.herokuapp.com${product.item?.pic.data[0].attributes.formats.large.url}`}
 
                                                 alt={product.item.imageAlt} className="w-20 rounded-md" />
                                         </div>

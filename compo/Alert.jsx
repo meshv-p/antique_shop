@@ -39,13 +39,23 @@ import { XCircleIcon } from '@heroicons/react/solid'
 // }
 
 
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Transition } from '@headlessui/react'
 // import { CheckCircleIcon } from '@heroicons/react/outline'
 // import { XIcon } from '@heroicons/react/solid'
 
 export default function Alert() {
     let alert = useAlert(state => state)
+
+    // useEffect(() => {
+    //     // hide alert after 3 seconds
+    //     const timer = setTimeout(() => {
+    //         alert.close()
+    //     }, 3000)
+    //     return () => clearTimeout(timer)
+
+
+    // }, [])
 
 
     return (
@@ -71,7 +81,12 @@ export default function Alert() {
                             <div className="p-4">
                                 <div className="flex items-start">
                                     <div className="flex-shrink-0">
-                                        <CheckCircleIcon className={`h-6 w-6 text-${statusDetails(alert.type)}-400`} aria-hidden="true" />
+                                        {/* Heroicon name: solid/check-circle */}
+                                        {
+                                            alert.type === 'success' ? <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" /> : <XIcon className="h-6 w-6 text-red-400" aria-hidden="true" />
+                                        }
+
+                                        {/* <CheckCircleIcon className={`h-6 w-6 text-${statusDetails(alert.type)}-400`} aria-hidden="true" /> */}
                                     </div>
                                     <div className="ml-3 w-0 flex-1 pt-0.5">
                                         <p className={`text-sm font-medium text-${statusDetails(alert.type)}-900`}>{alert.message}!</p>
