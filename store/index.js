@@ -56,7 +56,7 @@ export const useAuth = create((set) => ({
   },
   setURL: (mode) => {
     set((state) => ({
-      URL: mode === "production" ? BASE_URL : LOCAL_URL,
+      MAIN_URL: mode === "production" ? BASE_URL : LOCAL_URL,
     }));
 
     // set((state) => ({ url: url }));
