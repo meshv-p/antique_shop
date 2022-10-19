@@ -18,11 +18,11 @@ export const useSearch = create((set) => ({
 
 export const useAuth = create((set) => ({
   user: null,
-  URL: BASE_URL,
+  MAIN_URL: BASE_URL,
   fetchReq: async (type = "", details) => {
     let res;
     try {
-      res = await fetch(`${URL}/auth/local/${type}`, {
+      res = await fetch(`${MAIN_URL}/auth/local/${type}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -236,7 +236,7 @@ export const useFetch = create((set) => ({
       URL: mode === "production" ? BASE_URL : LOCAL_URL,
     }));
   },
-  fetch: async (endPoint, method, body) => {
+  urlFetch: async (endPoint, method, body) => {
     set((state) => ({ loading: true }));
     try {
       // url = "http://localhost:1337" + url;
