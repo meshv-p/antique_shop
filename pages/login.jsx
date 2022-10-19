@@ -20,26 +20,27 @@ export default function Login() {
     })
 
     const handleSubmit = async (e) => {
-        console.log(loginDetails);
+        // console.log(loginDetails);
         e.preventDefault()
 
-        let res = await login.fetchReq('', loginDetails)
-        let data = await res?.json()
-        console.log(res);
+        // let res = await login.fetchReq('', loginDetails)
+        // let data = await res?.json()
+        // console.log(res);
 
         // mkae fetch request
-        // let res = await urlFetch.fetch('auth/local', loginDetails)
-        // let data = await res?.json()
-        // console.log(data);
+        let res = await urlFetch.urlFetch('/auth/local', 'POST', loginDetails, false)
+        console.log(res, 'in res 32');
+        let data = await res?.json()
+        console.log(data);
 
 
 
         HttpErrorHandling({
             response: res,
             onSucess: async () => {
-                let response = data
+                let res = data
                 // console.log(response)
-                login.login(response)
+                login.login(res)
                 alert.open('Logged in successfully', 'Logged in successful.', 'success')
 
                 // check if the user is redirected from a page

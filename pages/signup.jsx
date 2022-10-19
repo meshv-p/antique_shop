@@ -2,12 +2,13 @@ import Link from "next/link";
 import Router from "next/router";
 import { useState } from "react";
 import { HttpErrorHandling } from "../services/httpErrorHandling";
-import { useAlert, useAuth } from "../store";
+import { useAlert, useAuth, useFetch } from "../store";
 
 export default function Signup() {
 
     let alert = useAlert()
     let login = useAuth()
+    let urlFetch = useFetch()
 
 
     const [signupDetails, setSignupDetails] = useState({
@@ -21,10 +22,14 @@ export default function Signup() {
         console.log(e);
         e.preventDefault()
 
-        let res = await login.fetchReq('register', signupDetails)
-        let data = await res.json()
+        // let res = await login.fetchReq('register', signupDetails)
+        // let data = await res.json()
 
-        console.log(res);
+
+        let res = await urlFetch.urlFetch('/auth/local/register', 'POST', signupDetails, false)
+        let data = await res?.json()
+        console.log(data);
+
         HttpErrorHandling({
             response: res,
             onSucess: () => {

@@ -13,7 +13,7 @@ export const statusDetails = (type) => {
 };
 
 export const HttpErrorHandling = ({ response, onSucess, onError }) => {
-  switch (response.status) {
+  switch (response?.status) {
     case 200:
       onSucess();
       break;
@@ -33,4 +33,5 @@ export const HttpErrorHandling = ({ response, onSucess, onError }) => {
 
       break;
   }
+  onError();
 };

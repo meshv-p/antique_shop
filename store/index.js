@@ -30,7 +30,7 @@ export const useAuth = create((set) => ({
           },
           body: JSON.stringify(details),
         });
-        console.log(res);
+        console.log(res, "res in 33");
         return await res;
       } catch (error) {
         console.log(error);
@@ -238,7 +238,7 @@ export const useFetch = create((set) => ({
       URL: mode === "production" ? BASE_URL : LOCAL_URL,
     }));
   },
-  urlFetch: async (endPoint, method, body) => {
+  urlFetch: async (endPoint, method, body, getBody = true) => {
     set((state) => ({ loading: true }));
     try {
       // url = "http://localhost:1337" + url;
@@ -250,6 +250,10 @@ export const useFetch = create((set) => ({
         },
         body: JSON.stringify(body),
       });
+      if (!getBody) {
+        return response;
+        set((state) => ({ data, loading: false }));
+      }
       const data = await response.json();
       set((state) => ({ data, loading: false }));
       return data;
