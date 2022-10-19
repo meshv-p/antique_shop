@@ -235,7 +235,7 @@ export const useFetch = create((set) => ({
   //set URL
   setURL: (mode) => {
     set((state) => ({
-      URL: mode === "production" ? BASE_URL : LOCAL_URL,
+      B_URL: mode === "production" ? BASE_URL : LOCAL_URL,
     }));
   },
   urlFetch: async (endPoint, method, body, getBody = true) => {
