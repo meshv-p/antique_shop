@@ -18,10 +18,11 @@ export const useSearch = create((set) => ({
 
 export const useAuth = create((set) => ({
   user: null,
+  URL: BASE_URL,
   fetchReq: async (type = "", details) => {
     let res;
     try {
-      res = await fetch(`${LOCAL_URL}/auth/local/${type}`, {
+      res = await fetch(`${URL}/auth/local/${type}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,6 +53,13 @@ export const useAuth = create((set) => ({
     if (user && token) {
       set((state) => ({ user: JSON?.parse(user) }));
     }
+  },
+  setURL: (mode) => {
+    set((state) => ({
+      URL: mode === "production" ? BASE_URL : LOCAL_URL,
+    }));
+
+    // set((state) => ({ url: url }));
   },
 }));
 
@@ -210,4 +218,41 @@ export const useCartStore = create((set) => ({
 
   increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   removeAllBears: () => set({ bears: 0 }),
+}));
+
+//make a custom hook for fetching data
+export const useFetch = create((set) => ({
+  //url: "http://localhost:1337",
+  URL: LOCAL_URL,
+
+  //fetching data
+  data: null,
+  loading: false,
+  error: null,
+
+  //set URL
+  setURL: (mode) => {
+    set((state) => ({
+      URL: mode === "production" ? BASE_URL : LOCAL_URL,
+    }));
+  },
+  fetch: async (endPoint, method, body) => {
+    set((state) => ({ loading: true }));
+    try {
+      // url = "http://localhost:1337" + url;
+
+      const response = await fetch(`${URL / endPoint}`, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      const data = await response.json();
+      set((state) => ({ data, loading: false }));
+      return data;
+    } catch (error) {
+      set((state) => ({ error, loading: false }));
+    }
+  },
 }));

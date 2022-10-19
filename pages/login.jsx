@@ -2,7 +2,7 @@ import Link from "next/link";
 import Router, { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { HttpErrorHandling } from "../services/httpErrorHandling";
-import { useAlert, useAuth } from "../store";
+import { useAlert, useAuth, useFetch } from "../store";
 
 
 
@@ -12,6 +12,7 @@ export default function Login() {
     let alert = useAlert()
     let login = useAuth()
     let router = useRouter()
+    let urlFetch = useFetch()
 
     const [loginDetails, setLoginDetails] = useState({
         identifier: "",
@@ -25,6 +26,14 @@ export default function Login() {
         let res = await login.fetchReq('', loginDetails)
         let data = await res?.json()
         console.log(res);
+
+        // mkae fetch request
+        // let res = await urlFetch.fetch('auth/local', loginDetails)
+        // let data = await res?.json()
+        // console.log(data);
+
+
+
         HttpErrorHandling({
             response: res,
             onSucess: async () => {
@@ -48,6 +57,7 @@ export default function Login() {
 
     useEffect(() => {
         console.log(login.user, 'lo', router);
+        console.log(process.env.NODE_ENV);
         if (login.user) {
             Router.push('/')
         }

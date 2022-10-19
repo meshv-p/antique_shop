@@ -8,6 +8,12 @@ function MyApp({ Component, pageProps }) {
   let auth = useAuth();
   useEffect(() => {
     auth.isLoggedinUser();
+    // check production or development
+    if (process.env.NODE_ENV === "production") {
+      auth.setURL("production");
+    } else {
+      auth.setURL("development");
+    }
   }, []);
 
   return (
