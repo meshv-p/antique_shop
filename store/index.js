@@ -20,21 +20,23 @@ export const useAuth = create((set) => ({
   user: null,
   MAIN_URL: BASE_URL,
   fetchReq: async (type = "", details) => {
-    let res;
-    try {
-      res = await fetch(`${MAIN_URL}/auth/local/${type}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(details),
-      });
-      console.log(res);
-      return await res;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
+    set(async (state) => {
+      let res;
+      try {
+        res = await fetch(`${state.MAIN_URL}/auth/local/${type}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(details),
+        });
+        console.log(res);
+        return await res;
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
+    });
   },
   login: (user) => {
     console.log("middle");
@@ -223,7 +225,7 @@ export const useCartStore = create((set) => ({
 //make a custom hook for fetching data
 export const useFetch = create((set) => ({
   //url: "http://localhost:1337",
-  URL: LOCAL_URL,
+  B_URL: LOCAL_URL,
 
   //fetching data
   data: null,
@@ -241,7 +243,7 @@ export const useFetch = create((set) => ({
     try {
       // url = "http://localhost:1337" + url;
 
-      const response = await fetch(`${URL / endPoint}`, {
+      const response = await fetch(`http://localhost:1337/api${endPoint}`, {
         method: method,
         headers: {
           "Content-Type": "application/json",
