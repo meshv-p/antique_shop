@@ -31,20 +31,25 @@ export default function Signup() {
         }
 
 
+        try {
+            let res = await urlFetch.urlFetch('/auth/local/register', 'POST', signupDetails, false)
+            let data = await res?.json()
+            console.log(data);
 
-        let res = await urlFetch.urlFetch('/auth/local/register', 'POST', signupDetails, false)
-        let data = await res?.json()
-        console.log(data);
+            HttpErrorHandling({
+                response: res,
+                onSucess: () => {
+                    alert.open('Sign up successfully', 'Signed up successfuly.Now you can login.', 'success')
+                    Router.push('/login')
+                },
+                onError: () => alert.open(data?.error?.message || 'No internet', 'error')
 
-        HttpErrorHandling({
-            response: res,
-            onSucess: () => {
-                alert.open('Sign up successfully', 'Signed up successfuly.Now you can login.', 'success')
-                Router.push('/login')
-            },
-            onError: () => alert.open(data?.error?.message, 'error')
+            })
+        } catch (error) {
+            alert.open('Some error occured', 'Network error', 'error')
 
-        })
+        }
+
     }
 
 

@@ -24,34 +24,42 @@ export default function ForgetPassword() {
         // console.log(res);
 
         // mkae fetch request
-        let res = await urlFetch.urlFetch('/auth/forgot-password', 'POST', details, false)
-        console.log(res, 'in res 32');
-        let data = await res?.json()
-        console.log(data);
+        try {
+            let res = await urlFetch.urlFetch('/auth/forgot-password', 'POST', details, false)
+            console.log(res, 'in res 32');
+            let data = await res?.json()
+            console.log(data);
+
+
+            HttpErrorHandling({
+                response: res,
+                onSucess: async () => {
+                    let res = data
+                    // console.log(response)
+                    // login.login(res)
+                    alert.open('Email Send successfully', 'Open email to change password', 'success')
+                    // console.log('opeinf alert')
+
+                    // check if the user is redirected from a page
+                    // if (router.query.callback) {
+                    //     router.push(router.query.callback)
+                    // } else {
+
+                    //     Router.push('/')
+                    // }
+                },
+                onError: () => alert.open(data?.error?.message || 'No internet', 'Looks like network problem', 'error')
+
+            })
+        } catch (error) {
+            alert.open('No internet', 'Network error', 'error')
+
+        }
 
 
 
 
-        HttpErrorHandling({
-            response: res,
-            onSucess: async () => {
-                let res = data
-                // console.log(response)
-                // login.login(res)
-                alert.open('Email Send successfully', 'Open email to change password', 'success')
-                // console.log('opeinf alert')
 
-                // check if the user is redirected from a page
-                // if (router.query.callback) {
-                //     router.push(router.query.callback)
-                // } else {
-
-                //     Router.push('/')
-                // }
-            },
-            onError: () => alert.open(data?.error?.message, 'error')
-
-        })
     }
 
     // useEffect(() => {

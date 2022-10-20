@@ -298,6 +298,8 @@ export const useFetch = create((set) => ({
       set((state) => ({ data, loading: false }));
       return data;
     } catch (error) {
+      //show alert message
+
       set((state) => ({ error, loading: false }));
     }
   },
