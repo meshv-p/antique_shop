@@ -90,7 +90,7 @@ export default function Alert() {
                                     </div>
                                     <div className="ml-3 w-0 flex-1 pt-0.5">
                                         <p className={`text-sm font-medium text-${statusDetails(alert.type)}-900`}>{alert.message}!</p>
-                                        <p className="mt-1 text-sm text-gray-500">{alert.message}.</p>
+                                        <p className="mt-1 text-sm text-gray-500">{alert.subMessage}.</p>
                                     </div>
                                     <div className="ml-4 flex-shrink-0 flex">
                                         <button

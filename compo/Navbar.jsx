@@ -149,7 +149,7 @@ export default function Navbar() {
 
     async function getCatories() {
         // Fetch data from external API
-        const res = await fetch(`http://localhost:1337/api/categories`);
+        const res = await fetch(`https://strapi-meshv.herokuapp.com/api/categories`);
         const getCategories = await res.json();
         // console.log(getCategories, 'in fun');
         setCategories(getCategories.data);
