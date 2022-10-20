@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useCartStore } from '../store'
 import { PlusSmIcon as PlusSmIconSolid, MinusSmIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
+import { ImageCompo } from '../compo/ImageCompo';
 
 const productsArr = [
     {
@@ -78,11 +79,20 @@ export default function Cart() {
                             {products.map((product, productIdx) => (
                                 <li key={product.idOfItem} className="flex py-6 sm:py-10">
                                     <div className="flex-shrink-0">
-                                        <img
+                                        {/* <img
                                             src={`https://strapi-meshv.herokuapp.com${product.item?.pic.data[0].attributes.formats.large.url}`}
 
                                             // src={product.item?.pic.data[0].attributes.formats.large.url}
                                             alt={product.item.name}
+                                            className="w-24 h-24 rounded-md object-center object-cover sm:w-48 sm:h-48"
+                                        /> */}
+                                        <ImageCompo
+                                            src={product.item?.pic}
+                                            alt={product.item.name}
+                                            // layout="fill"
+                                            width={200}
+                                            height={200}
+
                                             className="w-24 h-24 rounded-md object-center object-cover sm:w-48 sm:h-48"
                                         />
                                     </div>

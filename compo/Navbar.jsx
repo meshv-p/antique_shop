@@ -8,128 +8,128 @@ import CommandPalete from './CommandPalete'
 import { useAuth, useCartStore, useSearch } from '../store'
 import { UserAvatar } from './UserAvatar'
 
-const navigation = {
-    categories: [
-        {
-            id: 'women',
-            name: 'Clock',
-            featured: [
-                {
-                    name: 'New Arrivals',
-                    href: '#',
-                    imageSrc: '/clock.jfif',
-                    imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
-                },
-                {
-                    name: 'Brown Clock',
-                    href: '/product/Clock',
-                    imageSrc: '/brown_tree_clock.jfif',
-                    imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
-                },
-            ],
-            sections: [
-                {
-                    id: 'clothing',
-                    name: 'Clothing',
-                    items: [
-                        { name: 'Tops', href: '#' },
-                        { name: 'Dresses', href: '#' },
-                        { name: 'Pants', href: '#' },
-                        { name: 'Denim', href: '#' },
-                        { name: 'Sweaters', href: '#' },
-                        { name: 'T-Shirts', href: '#' },
-                        { name: 'Jackets', href: '#' },
-                        { name: 'Activewear', href: '#' },
-                        { name: 'Browse All', href: '#' },
-                    ],
-                },
-                {
-                    id: 'accessories',
-                    name: 'Accessories',
-                    items: [
-                        { name: 'Watches', href: '#' },
-                        { name: 'Wallets', href: '#' },
-                        { name: 'Bags', href: '#' },
-                        { name: 'Sunglasses', href: '#' },
-                        { name: 'Hats', href: '#' },
-                        { name: 'Belts', href: '#' },
-                    ],
-                },
-                {
-                    id: 'brands',
-                    name: 'Brands',
-                    items: [
-                        { name: 'Full Nelson', href: '#' },
-                        { name: 'My Way', href: '#' },
-                        { name: 'Re-Arranged', href: '#' },
-                        { name: 'Counterfeit', href: '#' },
-                        { name: 'Significant Other', href: '#' },
-                    ],
-                },
-            ],
-        },
-        {
-            id: 'men',
-            name: 'God',
-            featured: [
-                {
-                    name: 'New Arrivals: Spring 2021',
-                    href: '#',
-                    imageSrc: '/ganesh_murti.jfif',
-                    imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
-                },
-                {
-                    name: 'Artwork Tees',
-                    href: '',
-                    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
-                    imageAlt:
-                        'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-                },
-            ],
-            sections: [
-                {
-                    id: 'clothing',
-                    name: 'Clothing',
-                    items: [
-                        { name: 'Tops', href: '#' },
-                        { name: 'Pants', href: '#' },
-                        { name: 'Sweaters', href: '#' },
-                        { name: 'T-Shirts', href: '#' },
-                        { name: 'Jackets', href: '#' },
-                        { name: 'Activewear', href: '#' },
-                        { name: 'Browse All', href: '#' },
-                    ],
-                },
-                {
-                    id: 'accessories',
-                    name: 'Accessories',
-                    items: [
-                        { name: 'Watches', href: '#' },
-                        { name: 'Wallets', href: '#' },
-                        { name: 'Bags', href: '#' },
-                        { name: 'Sunglasses', href: '#' },
-                        { name: 'Hats', href: '#' },
-                        { name: 'Belts', href: '#' },
-                    ],
-                },
-                {
-                    id: 'brands',
-                    name: 'Brands',
-                    items: [
-                        { name: 'Re-Arranged', href: '#' },
-                        { name: 'Counterfeit', href: '#' },
-                        { name: 'Full Nelson', href: '#' },
-                        { name: 'My Way', href: '#' },
-                    ],
-                },
-            ],
-        },
-    ],
-    pages: [
-        { name: 'Company', href: '#' },
-        { name: 'Stores', href: '#' },
-    ],
-}
+// const navigation = {
+//     categories: [
+//         {
+//             id: 'women',
+//             name: 'Clock',
+//             featured: [
+//                 {
+//                     name: 'New Arrivals',
+//                     href: '#',
+//                     imageSrc: '/clock.jfif',
+//                     imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+//                 },
+//                 {
+//                     name: 'Brown Clock',
+//                     href: '/product/Clock',
+//                     imageSrc: '/brown_tree_clock.jfif',
+//                     imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+//                 },
+//             ],
+//             sections: [
+//                 {
+//                     id: 'clothing',
+//                     name: 'Clothing',
+//                     items: [
+//                         { name: 'Tops', href: '#' },
+//                         { name: 'Dresses', href: '#' },
+//                         { name: 'Pants', href: '#' },
+//                         { name: 'Denim', href: '#' },
+//                         { name: 'Sweaters', href: '#' },
+//                         { name: 'T-Shirts', href: '#' },
+//                         { name: 'Jackets', href: '#' },
+//                         { name: 'Activewear', href: '#' },
+//                         { name: 'Browse All', href: '#' },
+//                     ],
+//                 },
+//                 {
+//                     id: 'accessories',
+//                     name: 'Accessories',
+//                     items: [
+//                         { name: 'Watches', href: '#' },
+//                         { name: 'Wallets', href: '#' },
+//                         { name: 'Bags', href: '#' },
+//                         { name: 'Sunglasses', href: '#' },
+//                         { name: 'Hats', href: '#' },
+//                         { name: 'Belts', href: '#' },
+//                     ],
+//                 },
+//                 {
+//                     id: 'brands',
+//                     name: 'Brands',
+//                     items: [
+//                         { name: 'Full Nelson', href: '#' },
+//                         { name: 'My Way', href: '#' },
+//                         { name: 'Re-Arranged', href: '#' },
+//                         { name: 'Counterfeit', href: '#' },
+//                         { name: 'Significant Other', href: '#' },
+//                     ],
+//                 },
+//             ],
+//         },
+//         {
+//             id: 'men',
+//             name: 'God',
+//             featured: [
+//                 {
+//                     name: 'New Arrivals: Spring 2021',
+//                     href: '#',
+//                     imageSrc: '/ganesh_murti.jfif',
+//                     imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
+//                 },
+//                 {
+//                     name: 'Artwork Tees',
+//                     href: '',
+//                     imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
+//                     imageAlt:
+//                         'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
+//                 },
+//             ],
+//             sections: [
+//                 {
+//                     id: 'clothing',
+//                     name: 'Clothing',
+//                     items: [
+//                         { name: 'Tops', href: '#' },
+//                         { name: 'Pants', href: '#' },
+//                         { name: 'Sweaters', href: '#' },
+//                         { name: 'T-Shirts', href: '#' },
+//                         { name: 'Jackets', href: '#' },
+//                         { name: 'Activewear', href: '#' },
+//                         { name: 'Browse All', href: '#' },
+//                     ],
+//                 },
+//                 {
+//                     id: 'accessories',
+//                     name: 'Accessories',
+//                     items: [
+//                         { name: 'Watches', href: '#' },
+//                         { name: 'Wallets', href: '#' },
+//                         { name: 'Bags', href: '#' },
+//                         { name: 'Sunglasses', href: '#' },
+//                         { name: 'Hats', href: '#' },
+//                         { name: 'Belts', href: '#' },
+//                     ],
+//                 },
+//                 {
+//                     id: 'brands',
+//                     name: 'Brands',
+//                     items: [
+//                         { name: 'Re-Arranged', href: '#' },
+//                         { name: 'Counterfeit', href: '#' },
+//                         { name: 'Full Nelson', href: '#' },
+//                         { name: 'My Way', href: '#' },
+//                     ],
+//                 },
+//             ],
+//         },
+//     ],
+//     pages: [
+//         { name: 'Company', href: '#' },
+//         { name: 'Stores', href: '#' },
+//     ],
+// }
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -152,7 +152,7 @@ export default function Navbar() {
         const res = await fetch(`https://strapi-meshv.herokuapp.com/api/categories`);
         const getCategories = await res.json();
         // console.log(getCategories, 'in fun');
-        setCategories(getCategories.data);
+        setCategories((getCategories.data).slice(0, 3));
 
     }
 
@@ -217,10 +217,10 @@ export default function Navbar() {
                                 </div>
 
                                 {/* Links */}
-                                <Tab.Group as="div" className="mt-2">
+                                {/* <Tab.Group as="div" className="mt-2">
                                     <div className="border-b border-gray-200">
                                         <Tab.List className="-mb-px flex px-4 space-x-8">
-                                            {navigation.categories.map((category) => (
+                                            {  navigation.categories.map((category) => (
                                                 <Tab
                                                     key={category.name}
                                                     className={({ selected }) =>
@@ -277,9 +277,9 @@ export default function Navbar() {
                                             </Tab.Panel>
                                         ))}
                                     </Tab.Panels>
-                                </Tab.Group>
+                                </Tab.Group> */}
 
-                                <div className="border-t border-gray-200 py-6 px-4 space-y-6">
+                                {/* <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                                     {navigation.pages.map((page) => (
                                         <div key={page.name} className="flow-root">
                                             <a href={page.href} className="-m-2 p-2 block font-medium text-gray-900">
@@ -287,7 +287,7 @@ export default function Navbar() {
                                             </a>
                                         </div>
                                     ))}
-                                </div>
+                                </div> */}
 
                                 <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                                     <div className="flow-root">
@@ -359,7 +359,7 @@ export default function Navbar() {
                                     {categories && categories.map((category) => (
                                         <Popover key={category.name} className="flex">
                                             {({ open }) => (
-                                                <>
+                                                <Fragment key={category}>
                                                     <div className="relative flex">
 
                                                         <Popover.Button
@@ -440,12 +440,12 @@ export default function Navbar() {
                                                             </div> */}
                                                         </Popover.Panel>
                                                     </Transition>
-                                                </>
+                                                </Fragment>
                                             )}
                                         </Popover>
                                     ))}
 
-                                    {navigation.pages.map((page) => (
+                                    {/* {navigation.pages.map((page) => (
                                         <a
                                             key={page.name}
                                             href={page.href}
@@ -453,7 +453,7 @@ export default function Navbar() {
                                         >
                                             {page.name}
                                         </a>
-                                    ))}
+                                    ))} */}
                                 </div>
                             </Popover.Group>
 

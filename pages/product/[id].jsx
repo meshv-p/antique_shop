@@ -10,6 +10,7 @@ import { useCartStore } from '../../store';
 import { renderMarkdown } from '../../services/markdown';
 import { markdownToHtml } from '../../services/markdownToHtml';
 import Link from 'next/link';
+import { ImageCompo } from '../../compo/ImageCompo';
 
 
 
@@ -142,7 +143,7 @@ const ProductItem = ({ item }) => {
                     {/* Image gallery */}
                     <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
                         <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
-                            <Image
+                            {/* <Image
                                 loading='lazy'
                                 src={`https://strapi-meshv.herokuapp.com${product.attributes.Imgs.data[0].attributes.formats.large.url}`}
                                 alt={product.attributes.name}
@@ -150,6 +151,14 @@ const ProductItem = ({ item }) => {
                                 width={product.attributes.Imgs.data[0].attributes.formats.large.width}
                                 height={product.attributes.Imgs.data[0].attributes.formats.large.height}
 
+                            /> */}
+                            <ImageCompo
+                                src={product.attributes.Imgs}
+                                layout="fill"
+                                alt={product.attributes.name}
+                                className="w-full h-full object-center object-cover"
+                                width={product.attributes.Imgs.data[0].attributes.formats.large.width}
+                                height={product.attributes.Imgs.data[0].attributes.formats.large.height}
                             />
                         </div>
                         {/* <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">

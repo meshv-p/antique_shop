@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { ImageCompo, getImgUrl } from './ImageCompo';
 
 const callouts = [
     {
@@ -58,12 +59,21 @@ export default function Category() {
                                 <div key={i.attributes.name} className="group relative" style={{ cursor: 'pointer' }}>
 
                                     <div className="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
-                                        <Image
-                                            loading='lazy'
-                                            src={`https://strapi-meshv.herokuapp.com${i.attributes.Imgs.data[0].attributes.formats.large.url}`}
+                                        {/* <img
+                                            // loading='lazy'
+                                            // src={`https://strapi-meshv.herokuapp.com${i.attributes.Imgs.data[0].attributes.formats.large.url}`}
+                                            src={`https://strapi-meshv.herokuapp.com${getImgUrl(i.attributes.Imgs)}`}
                                             alt={i.attributes.name}
                                             className="w-full h-full object-center object-cover"
                                             layout="fill"
+                                        /> */}
+                                        <ImageCompo src={i.attributes.Imgs}
+                                            className="w-full h-full object-center object-cover"
+                                            width={500}
+                                            height={500}
+
+                                            layout="fill"
+                                            alt={i.attributes.name}
                                         />
                                     </div>
                                     <h3 className="mt-6 text-sm text-gray-500">

@@ -7,13 +7,18 @@ import { useAlert, useAuth, useFetch } from "../store";
 
 
 
-export default function ForgetPassword() {
+export default function ResetPassword() {
 
     let alert = useAlert()
     let router = useRouter()
     let urlFetch = useFetch()
 
-    const [details, setDetails] = useState({ email: "" })
+    const [details, setDetails] = useState({
+        password: "",
+        passwordConfirmation: "",
+        code: "",
+    })
+
 
     const handleSubmit = async (e) => {
         // console.log(loginDetails);
@@ -24,7 +29,7 @@ export default function ForgetPassword() {
         // console.log(res);
 
         // mkae fetch request
-        let res = await urlFetch.urlFetch('/auth/forgot-password', 'POST', details, false)
+        let res = await urlFetch.urlFetch('/auth/reset-password', 'POST', details, false)
         console.log(res, 'in res 32');
         let data = await res?.json()
         console.log(data);
@@ -38,7 +43,7 @@ export default function ForgetPassword() {
                 let res = data
                 // console.log(response)
                 // login.login(res)
-                alert.open('Email Send successfully', 'Open email to change password', 'success')
+                alert.open('Password has been successfully changed', 'You can now login with your new password', 'success')
                 // console.log('opeinf alert')
 
                 // check if the user is redirected from a page
@@ -54,25 +59,17 @@ export default function ForgetPassword() {
         })
     }
 
-    // useEffect(() => {
-    //     // console.log(login.user, 'lo', router);
-    //     // console.log(process.env.NODE_ENV);
-    //     if (login.user) {
-    //         Router.push('/')
-    //     }
-    // }, [login])
+    useEffect(() => {
+        //set the code
+        setDetails({ ...details, code: router.query.code })
+
+    }, [router.query.code])
+
 
 
     return (
         <>
-            {/*
-          This example requires updating your template:
-  
-          ```
-          <html className="h-full bg-gray-50">
-          <body className="h-full">
-          ```
-        */}
+
 
             <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -81,36 +78,50 @@ export default function ForgetPassword() {
                         src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                         alt="Workflow"
                     />
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Reset Password</h2>
-                    <p className="mt-2 text-center text-sm text-gray-600">
-                        Or{' '}
-                        <Link href="/login" type="button">
-                            <span className="font-medium text-indigo-600 hover:text-indigo-500" role='button'>
-                                Have your account?
-                            </span>
-                        </Link>
-                    </p>
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Set a new Password</h2>
+
                 </div>
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                         <form className="space-y-6" onSubmit={e => handleSubmit(e)}>
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                    Email address
+                                <label htmlFor="pasword" className="block text-sm font-medium text-gray-700">
+                                    Password
                                 </label>
                                 <div className="mt-1">
                                     <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        autoComplete="email"
+                                        id="pasword"
+                                        name="pasword"
+                                        type="password"
                                         required
-                                        onChange={(e) => setDetails(details => ({ ...details, email: e.target.value }))} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        onChange={(e) => setDetails(details => ({ ...details, password: e.target.value }))} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label htmlFor="passwordConfirmation" className="block text-sm font-medium text-gray-700">
+                                    Confirm Password
+                                </label>
+                                <div className="mt-1">
+                                    <input
+                                        id="passwordConfirmation"
+                                        name="passwordConfirmation"
+                                        type="password"
+                                        required
+                                        onChange={(e) => setDetails(details => ({ ...details, passwordConfirmation: e.target.value }))} className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     />
                                 </div>
                             </div>
 
+                            <div className="flex items-center justify-between">
 
+
+                                <div className="text-sm text-indigo-600 hover:text-indigo-500">
+                                    <Link href="/login" className="font-medium ">
+                                        Have password?
+                                    </Link>
+                                </div>
+                            </div>
 
                             <div>
                                 <button
@@ -118,7 +129,7 @@ export default function ForgetPassword() {
                                     // onClick={handleSubmit}
                                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
-                                    Send Reset link
+                                    Done
                                 </button>
                             </div>
                         </form>

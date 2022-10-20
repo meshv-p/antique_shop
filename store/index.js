@@ -88,6 +88,35 @@ export const useCartStore = create((set) => ({
   totalItems: 0,
   taxAmount: 0,
   shipAmount: 0,
+
+  // get all from localstorage
+  getAllItems: () => {
+    if (
+      localStorage.getItem("cart") &&
+      localStorage.getItem("totalAmount") &&
+      localStorage.getItem("totalItems")
+    ) {
+      let cart = localStorage?.getItem("cart");
+      let amount = localStorage?.getItem("totalAmount");
+      let items = localStorage?.getItem("totalItems");
+      set((state) => ({
+        cart: JSON.parse(cart),
+        totalAmount: JSON.parse(amount),
+        totalItems: JSON.parse(items),
+      }));
+    }
+    console.log("seeting al litem");
+  },
+
+  //set all value to local storage
+  setAllItems: (cart, amt, items) => {
+    localStorage?.setItem("cart", JSON.stringify(cart));
+    localStorage?.setItem("totalAmount", JSON.stringify(amt));
+    localStorage?.setItem("totalItems", JSON.stringify(items));
+    console.log("seeting al litem");
+
+    console.log("not setting al litem");
+  },
   /**
    * Find by id and update state
    * @param {itemObject} item {id,name,qty,price,pic}
@@ -128,6 +157,10 @@ export const useCartStore = create((set) => ({
         //increase total amount
         state.totalAmount += price;
       }
+
+      // call set All Value
+      state.setAllItems(cart, state.totalAmount, state.totalItems);
+
       return { cart };
     });
   },
@@ -149,6 +182,9 @@ export const useCartStore = create((set) => ({
         state.totalAmount -= item * cart[index].item.price;
         cart.splice(index, 1);
       }
+
+      // call set All Value
+      state.setAllItems(cart, state.totalAmount, state.totalItems);
       return { cart };
     });
   },
@@ -173,6 +209,8 @@ export const useCartStore = create((set) => ({
         state.totalAmount += cart[index].item.price;
       }
 
+      // call set All Value
+      state.setAllItems(cart, state.totalAmount, state.totalItems);
       return { cart };
     });
   },
@@ -206,6 +244,8 @@ export const useCartStore = create((set) => ({
         // state.totalAmount -= cart[index].item.price;
         cart.splice(index, 1);
 
+        // call set All Value
+        state.setAllItems(cart, state.totalAmount, state.totalItems);
         return { cart, totalItems: state.totalItems };
       }
 

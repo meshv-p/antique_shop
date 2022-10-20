@@ -7,7 +7,6 @@ import { useAlert, useAuth, useFetch } from "../store";
 export default function Signup() {
 
     let alert = useAlert()
-    let login = useAuth()
     let urlFetch = useFetch()
 
 
@@ -15,15 +14,22 @@ export default function Signup() {
         username: "",
         name: "",
         email: "",
-        password: ""
+        password: "",
+        phoneNumber: ""
     })
 
     const handleSubmit = async (e) => {
         console.log(e);
         e.preventDefault()
 
-        // let res = await login.fetchReq('register', signupDetails)
-        // let data = await res.json()
+
+        //check phone number length
+
+        if (signupDetails.phoneNumber.length > 10 || signupDetails.phoneNumber.length < 10) {
+
+            return alert.open("Please Enter a Valid Phone Number", "Phone number should be 10 numbers", 'error')
+        }
+
 
 
         let res = await urlFetch.urlFetch('/auth/local/register', 'POST', signupDetails, false)
@@ -44,14 +50,6 @@ export default function Signup() {
 
     return (
         <>
-            {/*
-          This example requires updating your template:
-  
-          ```
-          <html className="h-full bg-gray-50">
-          <body className="h-full">
-          ```
-        */}
             <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <img
@@ -119,6 +117,30 @@ export default function Signup() {
                                         className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     />
                                 </div>
+                                <span className="text-slate-500 text-xs">Enter Correct Email. We will send payment invoice to your email.</span>
+
+                            </div>
+                            <div>
+                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
+                                    Phone Number
+                                </label>
+                                <div className="mt-1">
+                                    <input
+                                        //for phone number input
+                                        type="number"
+                                        minLength="10"
+                                        id="phoneNumber"
+                                        name="phoneNumber"
+                                        // type="tel"
+                                        autoComplete="number"
+                                        required
+                                        maxLength={10}
+                                        // minLength={}
+                                        onChange={(e) => setSignupDetails({ ...signupDetails, phoneNumber: e.target.value })}
+                                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                </div>
+                                <span className="text-slate-500 text-xs">Enter Correct phone number. We will might send payment or otp to your phone number.</span>
                             </div>
 
                             <div>
