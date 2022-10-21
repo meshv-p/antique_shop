@@ -158,10 +158,10 @@ export default function Account() {
                                         <h2 className="text-lg leading-6 font-medium text-gray-900">
                                             Profile
                                         </h2>
-                                        <p className="mt-1 text-sm text-gray-500">
+                                        {/* <p className="mt-1 text-sm text-gray-500">
                                             This information will be displayed publicly so be careful
                                             what you share.
-                                        </p>
+                                        </p> */}
                                     </div>
 
                                     <div className="mt-6 flex flex-col lg:flex-row">
@@ -182,33 +182,15 @@ export default function Account() {
                                                         name="username"
                                                         id="username"
                                                         autoComplete="username"
+                                                        disabled
+
                                                         className="focus:ring-sky-500 focus:border-sky-500 flex-grow block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                                                         defaultValue={auth?.user?.username || user.handle}
                                                     />
                                                 </div>
                                             </div>
 
-                                            <div>
-                                                <label
-                                                    htmlFor="about"
-                                                    className="block text-sm font-medium text-gray-700"
-                                                >
-                                                    About
-                                                </label>
-                                                <div className="mt-1">
-                                                    <textarea
-                                                        id="about"
-                                                        name="about"
-                                                        rows={3}
-                                                        className="shadow-sm focus:ring-sky-500 focus:border-sky-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                                                        defaultValue={""}
-                                                    />
-                                                </div>
-                                                <p className="mt-2 text-sm text-gray-500">
-                                                    Brief description for your profile. URLs are
-                                                    hyperlinked.
-                                                </p>
-                                            </div>
+
                                         </div>
 
                                         <div className="mt-6 flex-grow lg:mt-0 lg:ml-6 lg:flex-grow-0 lg:flex-shrink-0">
@@ -279,34 +261,21 @@ export default function Account() {
                                                 htmlFor="first-name"
                                                 className="block text-sm font-medium text-gray-700"
                                             >
-                                                First name
+                                                Name
                                             </label>
                                             <input
                                                 type="text"
                                                 name="first-name"
                                                 id="first-name"
-                                                defaultValue='Meshv'
+                                                defaultValue={auth?.user?.name}
                                                 autoComplete="given-name"
+                                                disabled
+
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             />
                                         </div>
 
-                                        <div className="col-span-12 sm:col-span-6">
-                                            <label
-                                                htmlFor="last-name"
-                                                className="block text-sm font-medium text-gray-700"
-                                            >
-                                                Last name
-                                            </label>
-                                            <input
-                                                type="text"
-                                                name="last-name"
-                                                id="last-name"
-                                                defaultValue='Patel'
-                                                autoComplete="family-name"
-                                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
-                                            />
-                                        </div>
+
 
                                         <div className="col-span-12">
                                             <label
@@ -319,6 +288,8 @@ export default function Account() {
                                                 type="text"
                                                 name="url"
                                                 id="url"
+                                                disabled
+
                                                 defaultValue={auth?.user?.email}
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             />
@@ -337,6 +308,7 @@ export default function Account() {
                                                 id="company"
                                                 defaultChecked={auth?.user?.confirmed}
                                                 autoComplete="organization"
+                                                disabled
                                                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             />
                                         </div>
@@ -344,7 +316,7 @@ export default function Account() {
                                 </div>
 
                                 {/* Privacy section */}
-                                <div className="pt-6 divide-y divide-gray-200">
+                                {/* <div className="pt-6 divide-y divide-gray-200">
                                     <div className="px-4 sm:px-6">
                                         <div>
                                             <h2 className="text-lg leading-6 font-medium text-gray-900">
@@ -355,7 +327,7 @@ export default function Account() {
                                                 amet.
                                             </p>
                                         </div>
-                                        <ul role="list" className="mt-2 divide-y divide-gray-200">
+                                        {/* <ul role="list" className="mt-2 divide-y divide-gray-200">
                                             <Switch.Group
                                                 as="li"
                                                 className="py-4 flex items-center justify-between"
@@ -498,28 +470,28 @@ export default function Account() {
                                                     />
                                                 </Switch>
                                             </Switch.Group>
-                                        </ul>
-                                    </div>
-                                    <div className="mt-4 py-4 px-4 flex justify-end sm:px-6">
-                                        <button
-                                            type="button"
-                                            className="bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-                                        >
-                                            Cancel
-                                        </button>
-                                        <button
-                                            type="submit"
-                                            className="ml-5 bg-sky-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-                                        >
-                                            Save
-                                        </button>
-                                    </div>
-                                </div>
+                                        </ul> 
+                        </div>
+                        <div className="mt-4 py-4 px-4 flex justify-end sm:px-6">
+                            <button
+                                type="button"
+                                className="bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="ml-5 bg-sky-700 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div> */}
                             </form>
                         </div>
-                    </div>
-                </div>
-            </main>
-        </div>
+                    </div >
+                </div >
+            </main >
+        </div >
     );
 }

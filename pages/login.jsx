@@ -46,9 +46,10 @@ export default function Login() {
 
                     // check if the user is redirected from a page
                     if (router.query.callback) {
+                        console.log('checkout');
                         router.push(router.query.callback)
                     } else {
-
+                        console.log('Home')
                         Router.push('/')
                     }
                 },

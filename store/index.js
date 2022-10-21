@@ -4,9 +4,9 @@ import create from "zustand";
 const BASE_URL = "https://strapi-meshv.herokuapp.com/api";
 const LOCAL_URL = "http://localhost:1337/api";
 
-export const useBearStore = create((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+export const useTopBar = create((set) => ({
+  progress: 0,
+  setTopBar: (progress) => set((state) => ({ progress })),
   removeAllBears: () => set({ bears: 0 }),
 }));
 
