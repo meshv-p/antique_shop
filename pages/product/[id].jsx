@@ -11,6 +11,8 @@ import { renderMarkdown } from '../../services/markdown';
 import { markdownToHtml } from '../../services/markdownToHtml';
 import Link from 'next/link';
 import { ImageCompo } from '../../compo/ImageCompo';
+import { Dialog, Disclosure, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
+import { HeartIcon, MinusSmIcon, PlusSmIcon } from '@heroicons/react/solid';
 
 
 
@@ -97,194 +99,217 @@ const ProductItem = ({ item }) => {
 
     return (
         <>
-            <div className="bg-white">
-                {product && <div className="pt-6">
-                    <nav aria-label="Breadcrumb">
-                        <ol
-                            role="list"
-                            className="max-w-2xl mx-auto px-4 flex items-center space-x-2 sm:px-6 lg:max-w-7xl lg:px-8"
-                        >
-                            {product.breadcrumbs && product.breadcrumbs.map((breadcrumb) => (
-                                <li key={breadcrumb.id}>
-                                    <div className="flex items-center">
-                                        <a
-                                            href={breadcrumb.href}
-                                            className="mr-2 text-sm font-medium text-gray-900"
-                                        >
-                                            {breadcrumb.name}
-                                        </a>
-                                        <svg
-                                            width={16}
-                                            height={20}
-                                            viewBox="0 0 16 20"
-                                            fill="currentColor"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            aria-hidden="true"
-                                            className="w-4 h-5 text-gray-300"
-                                        >
-                                            <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-                                        </svg>
-                                    </div>
-                                </li>
-                            ))}
-                            <li className="text-sm font-medium text-gray-500 hover:text-gray-600">
-                                <Link
-                                    href='/'
-                                    aria-current="page"
-                                    className=""
-                                >
-                                    Home /
-                                </Link>
-                                {' ' + product.attributes.name}
-                            </li>
-                        </ol>
-                    </nav>
 
-                    {/* Image gallery */}
-                    <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
-                        <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
-                            {/* <Image
-                                loading='lazy'
-                                src={`https://strapi-meshv.herokuapp.com${product.attributes.Imgs.data[0].attributes.formats.large.url}`}
-                                alt={product.attributes.name}
-                                className="w-full h-full object-center object-cover"
-                                width={product.attributes.Imgs.data[0].attributes.formats.large.width}
-                                height={product.attributes.Imgs.data[0].attributes.formats.large.height}
 
-                            /> */}
-                            <ImageCompo
-                                src={product.attributes.Imgs}
-                                layout="fill"
-                                alt={product.attributes.name}
-                                className="w-full h-full object-center object-cover"
-                                width={product.attributes.Imgs.data[0].attributes.formats.large.width}
-                                height={product.attributes.Imgs.data[0].attributes.formats.large.height}
-                            />
-                        </div>
-                        {/* <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-                            <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
-                                <img
-                                    src={product.images[1].src}
-                                    alt={product.images[1].alt}
-                                    className="w-full h-full object-center object-cover"
-                                />
+            <main className="max-w-7xl mx-auto sm:pt-16 sm:px-6 lg:px-8">
+                <div className="max-w-2xl mx-auto lg:max-w-none">
+                    {/* Product */}
+                    <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
+                        {/* Image gallery */}
+                        <Tab.Group as="div" className="flex flex-col-reverse">
+                            {/* Image selector */}
+                            <div className="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
+                                <Tab.List className="grid grid-cols-4 gap-6">
+                                    {product?.attributes?.Imgs?.data?.map((image) => (
+                                        <Tab
+                                            key={image.id}
+                                            className="mb-5 relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50"
+                                        >
+                                            {({ selected }) => (
+                                                <>
+                                                    <span className="sr-only">{image.name}</span>
+                                                    <span className="absolute inset-0 rounded-md overflow-hidden">
+                                                        <img src={image.attributes.formats.large.url} alt="" className="w-full h-full object-center object-cover" />
+                                                    </span>
+                                                    <span
+                                                        className={classNames(
+                                                            selected ? 'ring-indigo-500' : 'ring-transparent',
+                                                            'absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none'
+                                                        )}
+                                                        aria-hidden="true"
+                                                    />
+                                                </>
+                                            )}
+                                        </Tab>
+                                    ))}
+                                </Tab.List>
                             </div>
-                            {/* <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
-                                <img
-                                    src={product.images[2].src}
-                                    alt={product.images[2].alt}
-                                    className="w-full h-full object-center object-cover"
-                                />
-                            </div> 
-                        </div> */}
-                        {/* <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
-                            <img
-                                src={product.images[3].src}
-                                alt={product.images[3].alt}
-                                className="w-full h-full object-center object-cover"
-                            />
-                        </div> */}
-                    </div>
 
-                    {/* Product info */}
-                    <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
-                        <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:tracking-tight sm:text-3xl">
-                                {product.attributes.name}
-                            </h1>
-                        </div>
+                            <Tab.Panels className="w-full aspect-w-1 aspect-h-1">
+                                {product?.attributes?.Imgs?.data?.map((image) => (
+                                    <Tab.Panel key={image.id}>
+                                        <img
+                                            src={image.attributes.formats.large.url}
+                                            alt={image.alt}
+                                            className="w-full h-full object-center object-cover sm:rounded-lg"
+                                        />
+                                    </Tab.Panel>
+                                ))}
+                            </Tab.Panels>
+                        </Tab.Group>
 
-                        {/* Options */}
-                        <div className="mt-4 lg:mt-0 lg:row-span-3">
-                            <h2 className="sr-only">Product information</h2>
-                            <p className="tracking-tight text-3xl text-gray-900">
-                                &#8377; {product.attributes.Price}
-                            </p>
+                        {/* Product info */}
+                        <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
+                            <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.attributes.name}</h1>
+
+                            <div className="mt-3">
+                                <h2 className="sr-only">Product information</h2>
+                                <p className="text-3xl text-gray-900"> &#8377; {product.attributes.Price}</p>
+                            </div>
 
                             {/* Reviews */}
-                            <div className="mt-6">
+                            <div className="mt-3">
                                 <h3 className="sr-only">Reviews</h3>
-                                <div className="flex items-center">
-                                    <div className="flex items-center"></div>
-                                    <p className="sr-only">{reviews.average} out of 5 stars</p>
-                                    <a
-                                        href={reviews.href}
-                                        className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                                    >
-                                        {reviews.totalCount} reviews
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div className="mt-10">
-                                {/* Colors */}
-                                <div>
-                                    <h3 className="text-sm text-gray-900 font-medium">Color</h3>
-                                </div>
-
-                                {/* Sizes */}
-                                <div className="mt-10">
-                                    <div className="flex items-center justify-between">
-                                        <h3 className="text-sm text-gray-900 font-medium">Size</h3>
-                                        <a
-                                            href="#"
-                                            className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                                        >
-                                            Size guide
-                                        </a>
+                                {/* <div className="flex items-center">
+                                    <div className="flex items-center">
+                                        {[0, 1, 2, 3, 4].map((rating) => (
+                                            <StarIcon
+                                                key={rating}
+                                                className={classNames(
+                                                    product.rating > rating ? 'text-indigo-500' : 'text-gray-300',
+                                                    'h-5 w-5 flex-shrink-0'
+                                                )}
+                                                aria-hidden="true"
+                                            />
+                                        ))}
                                     </div>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    onClick={addToCart}
-                                >
-                                    Add to bag
-                                </button>
+                                    <p className="sr-only">{product.rating} out of 5 stars</p>
+                                </div> */}
                             </div>
-                        </div>
 
-                        <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                            {/* Description and details */}
-                            <div>
+                            <div className="mt-6">
                                 <h3 className="sr-only">Description</h3>
 
-                                <div className="space-y-6">
-                                    {/* <p className="text-base text-gray-900" dangerouslySetInnerHTML={{ __html: md.renderInline(product.attributes.desc) }} /> */}
-                                    <p className="text-base text-gray-900" dangerouslySetInnerHTML={{ __html: md.render(product.attributes.desc) }} />
-                                    {/* {renderedHTML} */}
-                                    {/* </p> */}
-                                </div>
+                                <div
+                                    className="text-base text-gray-700 space-y-6"
+                                    dangerouslySetInnerHTML={{ __html: product.attributes.desc }}
+                                />
                             </div>
 
-                            <div className="mt-10">
-                                <h3 className="text-sm font-medium text-gray-900">
-                                    Highlights
-                                </h3>
+                            <div className="mt-6">
+                                {/* Colors */}
+                                <div>
+                                    <h3 className="text-sm text-gray-600">Color</h3>
 
-                                <div className="mt-4">
-                                    <ul role="list" className="pl-4 list-disc text-sm space-y-2">
-                                        {product.attributes?.highlights?.map((highlight) => (
-                                            <li key={highlight} className="text-gray-400">
-                                                <span className="text-gray-600">{highlight}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    {/* <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-2">
+                                        <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
+                                        <div className="flex items-center space-x-3">
+                                            {product.colors.map((color) => (
+                                                <RadioGroup.Option
+                                                    key={color.name}
+                                                    value={color}
+                                                    className={({ active, checked }) =>
+                                                        classNames(
+                                                            color.selectedColor,
+                                                            active && checked ? 'ring ring-offset-1' : '',
+                                                            !active && checked ? 'ring-2' : '',
+                                                            '-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none'
+                                                        )
+                                                    }
+                                                >
+                                                    <RadioGroup.Label as="p" className="sr-only">
+                                                        {color.name}
+                                                    </RadioGroup.Label>
+                                                    <span
+                                                        aria-hidden="true"
+                                                        className={classNames(
+                                                            color.bgColor,
+                                                            'h-8 w-8 border border-black border-opacity-10 rounded-full'
+                                                        )}
+                                                    />
+                                                </RadioGroup.Option>
+                                            ))}
+                                        </div>
+                                    </RadioGroup> */}
                                 </div>
+
+                                <div className="mt-10 flex sm:flex-col1">
+                                    <button
+                                        type="submit"
+                                        onClick={addToCart}
+
+                                        className="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
+                                    >
+                                        Add to bag
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className="ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+                                    >
+                                        <HeartIcon className="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+                                        <span className="sr-only">Add to favorites</span>
+                                    </button>
+                                </div>
+                                <button
+                                    type="submit"
+                                    onClick={() => {
+                                        addToCart()
+                                        url.push('/cart')
+                                    }
+                                    }
+
+                                    className="my-1 max-w-xs flex-1 border-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
+                                >
+                                    Buy now
+                                </button>
                             </div>
 
-                            <div className="mt-10">
-                                <h2 className="text-sm font-medium text-gray-900">Details</h2>
+                            <section aria-labelledby="details-heading" className="mt-12">
+                                <h2 id="details-heading" className="sr-only">
+                                    Additional details
+                                </h2>
 
-                                <div className="mt-4 space-y-6">
-                                    <p className="text-sm text-gray-600">{product.attributes?.details}</p>
+                                <div className="border-t divide-y divide-gray-200">
+                                    {/* {product.details.map((detail) => ( */}
+                                    <Disclosure as="div" >
+                                        {({ open }) => (
+                                            <>
+                                                <h3>
+                                                    <Disclosure.Button className="group relative w-full py-6 flex justify-between items-center text-left">
+                                                        <span
+                                                            className={classNames(
+                                                                open ? 'text-indigo-600' : 'text-gray-900',
+                                                                'text-sm font-medium'
+                                                            )}
+                                                        >
+                                                            Description
+                                                        </span>
+                                                        <span className="ml-6 flex items-center">
+                                                            {open ? (
+                                                                <MinusSmIcon
+                                                                    className="block h-6 w-6 text-indigo-400 group-hover:text-indigo-500"
+                                                                    aria-hidden="true"
+                                                                />
+                                                            ) : (
+                                                                <PlusSmIcon
+                                                                    className="block h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                                                                    aria-hidden="true"
+                                                                />
+                                                            )}
+                                                        </span>
+                                                    </Disclosure.Button>
+                                                </h3>
+                                                <Disclosure.Panel as="div" className="pb-6 prose prose-sm">
+                                                    {/* <ul role="list"> */}
+                                                    {product.attributes.desc}
+                                                    {/* {detail.items.map((item) => (
+                                                            <li key={item}>{item}</li>
+                                                        ))} */}
+                                                    {/* </ul> */}
+                                                </Disclosure.Panel>
+                                            </>
+                                        )}
+                                    </Disclosure>
+                                    {/* ))} */}
                                 </div>
-                            </div>
+                            </section>
                         </div>
                     </div>
-                </div>}
-            </div>
+
+
+                </div>
+            </main>
 
         </>
     )
@@ -298,7 +323,7 @@ export async function getServerSideProps(context) {
 
     const res = await fetch(`https://strapi-meshv.herokuapp.com/api/items?filters[Slug]=${id}&populate=*`)
     const item = await res.json()
-
+    console.log(item, 'item ============>');
 
     // generate HTML
     // const renderedHTML = await markdownToHtml(item.data[0].attributes.desc);

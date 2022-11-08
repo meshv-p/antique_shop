@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import LoadingBar from "react-top-loading-bar";
 import { Router } from "next/router";
 import { useTopBar } from "../store";
+import { Footer } from "./Footer";
 
 const App = ({ Component, pageProps }) => {
   let topBar = useTopBar();
@@ -37,6 +38,7 @@ const App = ({ Component, pageProps }) => {
       <Navbar />
       <Alert />
       <Component {...pageProps} />
+      <Footer />
     </>
   );
 };

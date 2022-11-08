@@ -19,7 +19,7 @@ export function getImgUrl(imgurl) {
     if (src?.thumbnail?.url) {
         return src.thumbnail.url
     }
-    // return null
+    return 'https://source.unsplash.com/random/500x500'
 
 
 }
@@ -36,7 +36,9 @@ export const ImageCompo = ({ src, className, width, height, layout, alt }) => {
     return (
         <Image
             loading='lazy'
-            src={`https://strapi-meshv.herokuapp.com${getImgUrl(src)}`}
+            // src={`https://strapi-meshv.herokuapp.com${getImgUrl(src)} || '/images/placeholder.png'`}
+
+            src={getImgUrl(src)}
             alt={alt || 'image'}
             className={`"${className || 'w-full h-full object-center object-cover'}  "`}
             // {

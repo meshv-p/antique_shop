@@ -7,7 +7,8 @@ export default class MyDocument extends Document {
         const pageProps = this.props?.__NEXT_DATA__?.props?.pageProps;
         return (
             <Html>
-                <Head />
+                <Head title='Antique Shop & Collections' />
+                <title>Antique Shop & Collections</title>
                 <body className={pageProps.isDark ? 'dark-mode' : 'bg-gray-50'}>
                     <Main />
                     <NextScript />

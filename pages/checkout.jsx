@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { PlusSmIcon as PlusSmIconSolid, MinusSmIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import { ImageCompo } from '../compo/ImageCompo'
-
+import Head from 'next/head';
+import Script from 'next/script'
 
 const products = [
     {
@@ -43,9 +44,19 @@ export default function Example() {
 
 
     useEffect(() => {
+
+        auth.isLoggedinUser();
+
+    }, [])
+
+
+
+    useEffect(() => {
         if (typeof window !== "undefined") {
 
-            if (!auth.user) {
+
+
+            if (!localStorage?.getItem("user")) {
                 console.log('Not logged')
                 router.push('/login?callback=/checkout')
             }
@@ -63,12 +74,110 @@ export default function Example() {
 
     const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
 
+
+    async function startPayment({ cart, subTotal }) {
+
+
+
+
+        let txnToken;
+        let oid = Math.floor(Math.random() * Date.now());
+
+
+        let data = {
+            MID: process.env.NEXT_PUBLIC_MID,
+            oid,
+            cart,
+            subTotal,
+            email: "meshv1823@gmail.com"
+        }
+
+        // Get a transaction token
+        let a = await fetch(`https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${process.env.NEXT_PUBLIC_MID}&orderId=${oid}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        let b = await a.json()
+        txnToken = b.body.txnToken;
+        console.log(b)
+
+        // function openJsCheckoutPopup(orderId, txnToken, amount){
+        var config = {
+            "root": "",
+            "flow": "DEFAULT",
+            "data": {
+                "orderId": oid,
+                "token": txnToken,
+                "tokenType": "TXN_TOKEN",
+                "amount": subTotal
+            },
+            "merchant": {
+                "redirect": true
+            },
+            "handler": {
+                "notifyMerchant": function (eventName, data) {
+                    console.log("notifyMerchant handler function called");
+                    console.log("eventName => ", eventName);
+                    console.log("data => ", data);
+                }
+            }
+        };
+        if (window.Paytm && window.Paytm.CheckoutJS) {
+            // initialze configuration using init method 
+            window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
+                // after successfully updating configuration, invoke checkoutjs
+                window.Paytm.CheckoutJS.invoke();
+            }).catch(function onError(error) {
+                console.log("error => ", error);
+            });
+        }
+        else {
+
+            console.log('Not checkpr');
+            console.log(window.Paytm);
+        }
+        //   }
+
+
+
+    }
+
+
+
     return (
         <div className="bg-gray-50">
+            <Head>
+
+                <title>Paytm JS Checkout - NodeJs</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+                <Script type="application/javascript" crossOrigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_MID}.js`} />
+
+                {/* 
+PAYTM_MID = "ZLaVfW76654802288395"
+PAYTM_MERCHANT_KEY = "MU3inA3i3Ara5GX&"
+
+var ENV= 'securegw-stage.paytm.in';
+var WEBSITE= 'WEBSTAGING';
+
+exports.MID = MID;
+exports.MKEY = MKEY;
+exports.ENV = ENV;
+exports.WEBSITE = WEBSITE; */}
+
+
+                <Script type="application/javascript" crossOrigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_MID}.js`} />
+
+
+            </Head>
             <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                 <h2 className="sr-only">Checkout</h2>
 
-                <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+                <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
                     <div>
                         <div>
                             <h2 className="text-lg font-medium text-gray-900">Contact information</h2>
@@ -351,7 +460,8 @@ export default function Example() {
 
                             <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                                 <button
-                                    type="submit"
+                                    type="button"
+                                    onClick={startPayment}
                                     className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
                                 >
                                     Pay &#8377; {cart.totalAmount}
@@ -359,7 +469,7 @@ export default function Example() {
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     )

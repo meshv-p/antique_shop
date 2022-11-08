@@ -8,6 +8,8 @@ const nextConfig = {
       "localhost",
       "strapi-meshv.herokuapp.com",
       "upload.wikimedia.org",
+      "source.unsplash.com",
+      "res.cloudinary.com",
     ],
   },
 };

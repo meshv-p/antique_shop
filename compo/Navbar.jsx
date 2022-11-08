@@ -7,6 +7,8 @@ import Image from 'next/image'
 import CommandPalete from './CommandPalete'
 import { useAuth, useCartStore, useSearch } from '../store'
 import { UserAvatar } from './UserAvatar'
+import logo from '../public/Logo.jpg'
+
 
 // const navigation = {
 //     categories: [
@@ -345,8 +347,8 @@ export default function Navbar() {
                                 <span className="sr-only">Logo</span>
                                 <Link href="/">
                                     <img style={{ cursor: 'pointer' }}
-                                        className="h-8 w-auto"
-                                        src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                                        className="h-8 w-auto rounded"
+                                        src='/Logo.jpg'
                                         alt="al"
                                         layout='fill'
                                     />
@@ -370,7 +372,7 @@ export default function Navbar() {
                                                                 'relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px'
                                                             )}
                                                         >
-                                                            <Link href={`/product/${category.attributes.name}`}>
+                                                            <Link href={`/c/${category.attributes.name}`}>
                                                                 {category.attributes.name}
                                                             </Link>
                                                         </Popover.Button>

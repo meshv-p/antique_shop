@@ -12,8 +12,10 @@ export const useTopBar = create((set) => ({
 
 export const useSearch = create((set) => ({
   isSearch: false,
+  query: "",
   open: () => set((state) => ({ isSearch: true })),
   close: () => set((state) => ({ isSearch: !state.isSearch })),
+  setQuery: (query) => set((state) => ({ query })),
 }));
 
 export const useAuth = create((set) => ({

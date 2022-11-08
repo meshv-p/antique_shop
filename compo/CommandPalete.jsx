@@ -66,16 +66,7 @@ export default function Example() {
         search(e.target.value).then((data) => {
             console.log(data.data)
             setItems(data.data)
-
         })
-
-
-        // urlFetch.urlFetch(`/items?_q=${query}&populate=*`, 'GET', false).then((data) => {
-        //     console.log(data)
-        // }
-        // )
-
-
     }
 
 
@@ -93,7 +84,7 @@ export default function Example() {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
+                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-50  backdrop-blur-0 transition-opacity" />
                 </Transition.Child>
 
                 <Transition.Child
@@ -111,11 +102,9 @@ export default function Example() {
                         onChange={(item) => {
                             router.push(`/product/${item.attributes.Slug}`)
                             closeSearch()
-                        }
-                        }
+                        }}
                     >
 
-                        {/* // (window.location = `/product/${item.attributes.Slug}`)} */}
                         <div className="relative">
                             <SearchIcon
                                 className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
@@ -149,7 +138,7 @@ export default function Example() {
                                                     )}
                                                 >
                                                     <Image
-                                                        src={`http://localhost:1337${item.attributes.Imgs.data[0].attributes.formats.thumbnail.url}`}
+                                                        src={`${item.attributes.Imgs.data[0].attributes.formats.thumbnail.url}`}
                                                         className=" rounded-full object-cover"
                                                         alt=""
                                                         height='32px' width='32px'

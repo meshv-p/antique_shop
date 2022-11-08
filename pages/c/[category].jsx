@@ -1,23 +1,12 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { Fragment, useState } from 'react'
+
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon, FilterIcon, MinusSmIcon, PlusSmIcon, ViewGridIcon } from '@heroicons/react/solid'
+import { ImageCompo } from '../../compo/ImageCompo'
+import Link from 'next/link'
+import qs from 'qs'
+
 
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -71,12 +60,30 @@ const filters = [
     },
 ]
 
+// const products = [
+//     {
+//         id: 1,
+//         name: 'Travel tote',
+//         href: '#',
+//         price: '$90',
+//         color: 'White',
+//         size: '12L',
+//         imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg',
+//         imageAlt: 'Front of men&#039;s Basic Tee in white.',
+//     },
+// ]
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Category() {
+export default function Category({ products }) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+    useEffect(() => {
+
+
+        console.log(products, 'in')
+    }, [])
 
     return (
         <div className="bg-white">
@@ -247,8 +254,11 @@ export default function Category() {
                             Products
                         </h2>
 
+
+
+
                         <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
-                            {/* Filters */}
+                            {/* {/* Filters  */}
                             <form className="hidden lg:block">
                                 <h3 className="sr-only">Categories</h3>
                                 <ul role="list" className="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200">
@@ -303,11 +313,46 @@ export default function Category() {
                                 ))}
                             </form>
 
-                            {/* Product grid */}
+                            {/* {/* Product grid  */}
                             <div className="lg:col-span-3">
-                                {/* Replace with your content */}
-                                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 lg:h-full" />
-                                {/* /End replace */}
+                                {/* {/* Replace with your content */}
+                                <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                                    {products && products?.data?.map((product) => (
+                                        <Link
+
+                                            key={product.id}
+                                            href={`/product/${product.attributes.Slug}`} className="group"
+                                            style={{
+                                                cursor: 'pointer'
+                                            }
+
+                                            }
+                                        >
+                                            <span className='group' style={{ cursor: 'pointer' }}>
+                                                <div className="w-full  bg-gray-200 rounded-lg overflow-hidden ">
+
+                                                    <ImageCompo
+                                                        src={product.attributes.Imgs}
+                                                        layout="fill"
+
+                                                        alt={product.attributes.name}
+                                                        width={product.attributes?.Imgs?.data?.attributes?.formats?.large?.width ?? 600}
+                                                        height={product.attributes?.Imgs?.data?.attributes?.formats?.large?.height ?? 1000}
+                                                        className="w-full h-full object-center object-cover group-hover:opacity-75"
+                                                    />
+                                                    {/* <img
+                                                    src={product.attributes.Imgs.data.attributes.formates.large.url}
+                                                    alt={product.imageAlt}
+                                                    className="w-full h-full object-center object-cover group-hover:opacity-75"
+                                                /> */}
+                                                </div>
+                                                <h3 className="mt-4 text-sm text-gray-700">{product.attributes.name}</h3>
+                                                <p className="mt-1 text-lg font-medium text-gray-900">&#8377; {product.attributes.Price}</p>
+                                            </span>
+
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -315,4 +360,38 @@ export default function Category() {
             </div>
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+    // get the subcategory from the url
+    const { category } = context.query
+
+    console.log(category, 'id')
+
+    const query = qs.stringify({
+        filters: {
+            category: {
+                name: {
+                    $eq: category
+                }
+            }
+        }
+    }, {
+        encodeValuesOnly: true, // prettify URL
+    })
+
+    console.log(query, 'query');
+    const res = await fetch(`https://strapi-meshv.herokuapp.com/api/items?${query}&populate=*`)
+    const products = (await res.json())
+
+    console.log('Item ====================>', products);
+    // generate HTML
+    // const renderedHTML = await markdownToHtml(item.data[0].attributes.desc);
+
+    return {
+        props: {
+            products,
+            // renderedHTML
+        },
+    }
 }

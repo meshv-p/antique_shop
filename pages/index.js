@@ -4,6 +4,7 @@ import { Most_Popular } from "../compo/Most_Popular";
 import { Footer } from "../compo/Footer";
 import { useAuth, useBearStore } from "../store";
 import { useEffect } from "react";
+import { Location } from "../compo/Location";
 // import { StarIcon } from "@heroicons/react/solid";
 // import { RadioGroup } from "@headlessui/react";
 function BearCounter() {
@@ -35,8 +36,8 @@ export default function Home() {
 
       <Category />
       <Products />
-      <Most_Popular />
-      <Footer />
+      {/* <Most_Popular /> */}
+      <Location />
     </>
   );
 }
