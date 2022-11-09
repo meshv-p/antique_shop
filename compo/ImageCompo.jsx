@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 export function getImgUrl(imgurl) {
-    console.log(imgurl);
+    // console.log(imgurl);
     let src = imgurl?.data?.[0]?.attributes?.formats;
-    console.log(src);
+    // console.log(src);
     // smaple - i.attributes.Imgs.data[0].attributes.formats.large.url
     // check possible url of large,smaill,medium and thubmnail image
 

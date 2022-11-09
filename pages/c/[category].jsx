@@ -9,11 +9,11 @@ import qs from 'qs'
 
 
 const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false },
+    'Most Popular',
+    'Best Rating',
+    'Newest',
+    'Price: Low to High',
+    'Price: High to Low'
 ]
 const subCategories = [
     { name: 'Totes', href: '#' },
@@ -60,30 +60,83 @@ const filters = [
     },
 ]
 
-// const products = [
-//     {
-//         id: 1,
-//         name: 'Travel tote',
-//         href: '#',
-//         price: '$90',
-//         color: 'White',
-//         size: '12L',
-//         imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-01.jpg',
-//         imageAlt: 'Front of men&#039;s Basic Tee in white.',
-//     },
-// ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Category({ products }) {
+export default function Category({ products: p }) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-    useEffect(() => {
+    const [products, setProducts] = useState(p.data)
+    // sort by
+    const [sortBy, setSortBy] = useState(sortOptions[3].name)
 
+
+
+    useEffect(() => {
 
         console.log(products, 'in')
     }, [])
+
+
+    // sort by end
+    function sortArray(array, key, order = 'asc') {
+        console.log(array, key, order);
+        return array.sort((a, b) => {
+            const x = a.attributes[key]
+            const y = b.attributes[key]
+            console.log(x, y, 'x, y');
+            if (order === 'asc') {
+
+                return y - x
+            }
+            return x - y
+        })
+    }
+
+    // let sortCategory = {
+    //     'Price: High to Low': sortArray(products, 'Price', 'desc'),
+    //     'Price: Low to High': sortArray(products, 'Price'),
+    //     'Most Popular': sortArray(products, 'id'),
+    //     'Best Rating': sortArray(products, 'rating'),
+    //     'Newest': sortArray(products, 'id', 'desc'),
+
+    // }
+    //useEffect for sort by
+    useEffect(() => {
+        console.log(sortBy, 'sort by', products)
+
+        if (sortBy === 'Price: High to Low') {
+            console.log(sortBy, 'sort by', products)
+            let sorted = sortArray(products, 'Price', 'desc')
+            console.log(sorted, 'sorted arr')
+            setProducts(sorted)
+        }
+        if (sortBy === 'Price: Low to High') {
+            console.log(sortBy, 'sort by', products)
+            let sorted = sortArray(products, 'Price')
+            console.log(sorted, 'sorted arr')
+            setProducts(sorted)
+        }
+        if (sortBy === 'Most Popular') {
+            console.log(sortBy, 'sort by', products)
+            let sorted = sortArray(products, 'id')
+            console.log(sorted, 'sorted arr')
+            setProducts(sorted)
+        }
+        if (sortBy === 'Best Rating') {
+            setProducts(sorted)
+        }
+        if (sortBy === 'Newest') {
+            let sorted = sortArray(products, 'createdAt', 'desc')
+            console.log(sorted, 'sorted arr')
+            setProducts(sorted)
+        }
+
+
+
+    }, [sortBy, products])
+
 
     return (
         <div className="bg-white">
@@ -213,22 +266,45 @@ export default function Category({ products }) {
                                 >
                                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <div className="py-1">
-                                            {sortOptions.map((option) => (
-                                                <Menu.Item key={option.name}>
+                                            {false && sortOptions.map((option) => (
+                                                <Menu.Item key={option}
+                                                    onClick={() => {
+                                                        console.log(option)
+                                                        setSortBy(option);
+                                                        // setMobileSortByOpen(false);
+                                                    }}
+                                                // className='border border-black'
+                                                >
                                                     {({ active }) => (
-                                                        <a
-                                                            href={option.href}
+                                                        <div
+                                                            // role='button'
+                                                            // onClick={() => {
+                                                            //     console.log(option)
+                                                            //     setSortBy(option)
+                                                            // }}
                                                             className={classNames(
-                                                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
+                                                                'font-medium text-gray-900',
                                                                 active ? 'bg-gray-100' : '',
+                                                                // 'bg-gray-100',
                                                                 'block px-4 py-2 text-sm'
                                                             )}
                                                         >
-                                                            {option.name}
-                                                        </a>
+                                                            {option}
+                                                        </div>
                                                     )}
                                                 </Menu.Item>
                                             ))}
+                                            <select name="" id=""
+                                                onChange={(e) => {
+                                                    console.log(e.target.value)
+                                                    setSortBy(e.target.value)
+                                                }}
+                                                value='Sort by'
+                                            >
+                                                <option value="Newest">Newest</option>
+                                                <option value="Price: High to Low">Price: High to Low</option>
+                                                <option value="Price: Low to High">Price: Low to High</option>
+                                            </select>
                                         </div>
                                     </Menu.Items>
                                 </Transition>
@@ -264,7 +340,10 @@ export default function Category({ products }) {
                                 <ul role="list" className="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200">
                                     {subCategories.map((category) => (
                                         <li key={category.name}>
-                                            <a href={category.href}>{category.name}</a>
+                                            <div
+                                                onClick={() => { }}
+
+                                            >{category.name}</div>
                                         </li>
                                     ))}
                                 </ul>
@@ -317,7 +396,7 @@ export default function Category({ products }) {
                             <div className="lg:col-span-3">
                                 {/* {/* Replace with your content */}
                                 <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                                    {products && products?.data?.map((product) => (
+                                    {products && products.map((product) => (
                                         <Link
 
                                             key={product.id}
@@ -380,11 +459,11 @@ export async function getServerSideProps(context) {
         encodeValuesOnly: true, // prettify URL
     })
 
-    console.log(query, 'query');
+    // console.log(query, 'query');
     const res = await fetch(`https://strapi-meshv.herokuapp.com/api/items?${query}&populate=*`)
     const products = (await res.json())
 
-    console.log('Item ====================>', products);
+    // console.log('Item ====================>', products);
     // generate HTML
     // const renderedHTML = await markdownToHtml(item.data[0].attributes.desc);
 
