@@ -6,8 +6,8 @@ import Link from 'next/link'
 import { PlusSmIcon as PlusSmIconSolid, MinusSmIcon } from '@heroicons/react/solid'
 import { useRouter } from 'next/router'
 import { ImageCompo } from '../compo/ImageCompo'
-import Head from 'next/head';
-import Script from 'next/script'
+// import Head from 'next/head';
+// import Script from 'next/script'
 
 const products = [
     {
@@ -150,30 +150,7 @@ export default function Example() {
 
     return (
         <div className="bg-gray-50">
-            <Head>
 
-                <title>Paytm JS Checkout - NodeJs</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-                <Script type="application/javascript" crossOrigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_MID}.js`} />
-
-                {/* 
-PAYTM_MID = "ZLaVfW76654802288395"
-PAYTM_MERCHANT_KEY = "MU3inA3i3Ara5GX&"
-
-var ENV= 'securegw-stage.paytm.in';
-var WEBSITE= 'WEBSTAGING';
-
-exports.MID = MID;
-exports.MKEY = MKEY;
-exports.ENV = ENV;
-exports.WEBSITE = WEBSITE; */}
-
-
-                <Script type="application/javascript" crossOrigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_MID}.js`} />
-
-
-            </Head>
             <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                 <h2 className="sr-only">Checkout</h2>
 
