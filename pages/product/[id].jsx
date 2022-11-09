@@ -182,7 +182,7 @@ const ProductItem = ({ item }) => {
 
                                 <div
                                     className="text-base text-gray-700 space-y-6"
-                                    dangerouslySetInnerHTML={{ __html: product.attributes.desc }}
+                                    dangerouslySetInnerHTML={{ __html: md.render(product.attributes.desc) }}
                                 />
                             </div>
 
@@ -290,14 +290,17 @@ const ProductItem = ({ item }) => {
                                                         </span>
                                                     </Disclosure.Button>
                                                 </h3>
-                                                <Disclosure.Panel as="div" className="pb-6 prose prose-sm">
-                                                    {/* <ul role="list"> */}
-                                                    {product.attributes.desc}
-                                                    {/* {detail.items.map((item) => (
+                                                <Disclosure.Panel as="div" className="pb-6 prose prose-sm"
+
+                                                    dangerouslySetInnerHTML={{ __html: md.render(product.attributes.desc) }}
+                                                />
+                                                {/* <ul role="list"> */}
+                                                {/* {md.render(product.attributes.desc)} */}
+                                                {/* {detail.items.map((item) => (
                                                             <li key={item}>{item}</li>
                                                         ))} */}
-                                                    {/* </ul> */}
-                                                </Disclosure.Panel>
+                                                {/* </ul> */}
+                                                {/* </Disclosure.Panel> */}
                                             </>
                                         )}
                                     </Disclosure>
