@@ -31,9 +31,6 @@ export default function Home() {
     // Footer
     // Map
     <>
-      {/* <BearCounter />
-      <Controls /> */}
-
       <Category />
       <Products />
       {/* <Most_Popular /> */}
